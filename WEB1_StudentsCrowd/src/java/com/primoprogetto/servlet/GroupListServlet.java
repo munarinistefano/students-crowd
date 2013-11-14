@@ -6,6 +6,7 @@ package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
 import com.primoprogetto.database.Group;
+import com.primoprogetto.database.Invitation;
 import com.primoprogetto.database.User;
 import com.primoprogetto.database.User_Group;
 import java.io.IOException;
@@ -72,8 +73,11 @@ public class GroupListServlet extends HttpServlet {
       out.println("<body>");
       for (int i=0; i<groupList.size(); i++){
                 System.err.println(groupList.get(i).getName());
-                out.println(i+1 + ". " + groupList.get(i).getName() + " create by "
-                        + /*groupList.get(i).getIDOwner() +*/ " in date: "
+                
+                System.err.println(groupList.get(i).getOwnerName());
+                out.println(i+1 + ". <a href=" + groupList.get(i).getID() + ">" + 
+                        groupList.get(i).getName() + "</a> create by "
+                        + groupList.get(i).getOwnerName() + " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");
             }
             

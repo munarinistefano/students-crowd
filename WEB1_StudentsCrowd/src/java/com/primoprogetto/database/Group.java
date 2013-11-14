@@ -26,6 +26,10 @@ public class Group {
     private String insertQuery = "INSERT INTO "+ GroupTable + " (NAME,OWNER_ID,CREATION_DATE) VALUES (?,?,?)";
     private String getIDcreatedGroup = "SELECT id FROM "+ GroupTable + " WHERE name = ? AND owner_id = ? AND creation_date = ?";
     
+    //////////////
+    private String ownerName;
+    private String getOwnerName = "SELECT USERNAME FROM USERS JOIN GROUPS ON USERS.ID = GROUPS.OWNER_ID WHERE GROUPS.ID = ?";
+    //////////////
     
     public void setName(String name){
         this.name=name;
@@ -58,6 +62,24 @@ public class Group {
     public int getIDOwner(){
         return this.OwnerID;
     }
+
+    //////////////////////////
+    public void setOwnerName(int GroupID) throws SQLException{
+        ResultSet rs = DBManager.executeSelectQuery(getOwnerName, GroupID);
+        try {
+          while (rs.next()) {
+            this.ownerName = rs.getString(1);
+            System.err.println(ownerName);
+          }
+        } finally {
+          rs.close();
+        }
+    }
+    
+        public String getOwnerName(){
+        return this.ownerName;
+    }
+    //////////////////////////
     
     public ArrayList<Group> getAllGroups() throws SQLException {
       ArrayList<Group> groups = new ArrayList();
