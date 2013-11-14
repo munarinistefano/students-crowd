@@ -30,8 +30,8 @@ public class CreateGroup extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // inizializza il DBManager dagli attributi di Application
-        this.manager = (DBManager)super.getServletContext().getAttribute("dbmanager");
+    // inizializza il DBManager dagli attributi di Application
+      this.manager = (DBManager)super.getServletContext().getAttribute("dbmanager");
     }
     
     /**
