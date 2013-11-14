@@ -70,7 +70,9 @@ public class GroupList extends HttpServlet {
       out.println("</head>");
       out.println("<body>");
       for (int i=0; i<groupList.size(); i++){
-                out.println(i+1 + ". " + groupList.get(i).getName() + ";");
+                out.println(i+1 + ". " + groupList.get(i).getName() + " create by "
+                        + groupList.get(i).getIDOwner() + " in date: "
+                        + groupList.get(i).getCreationDate() + ";<br />");
             }
       out.println("</body>");
       out.println("</html>");
