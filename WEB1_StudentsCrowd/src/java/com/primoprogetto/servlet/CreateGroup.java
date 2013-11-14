@@ -74,6 +74,7 @@ public class CreateGroup extends HttpServlet {
             for (int i=0; i<userList.size(); i++){
                 out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getUsername() +">"+ userList.get(i).getUsername() + "</li>");
             }
+            
             out.println("</ul>");
             out.println("<input type=\"submit\" value=\"Submit\">\n");
             out.println("</form>");
@@ -85,7 +86,6 @@ public class CreateGroup extends HttpServlet {
     }
     
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -115,6 +115,44 @@ public class CreateGroup extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
 
+        Enumeration paramNames = request.getParameterNames();
+        
+        while(paramNames.hasMoreElements()) {
+                String paramName = (String)paramNames.nextElement();
+                //out.print("<li>" + paramName + " ");
+                
+                if (paramName.equals("groupname")){                 //get group name
+                    // Get the system date and time.
+                    java.util.Date utilDate = new java.util.Date();
+                    // Convert it to java.sql.Date
+                    java.sql.Date date = new java.sql.Date(utilDate.getTime());     //set creation date
+                    try {
+                        manager.addGroup(paramName, user.getID(), date);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    String[] paramValues = request.getParameterValues(paramName);
+                    // Read single valued data
+                    /*if (paramValues.length == 1) {
+                        String paramValue = paramValues[0];
+                        if (paramValue.length() == 0)
+                            //out.println("<i>No Value</i>");
+                            //DO NOTHING
+                        else
+                            //out.println(paramValue);
+                    } else {*/
+                        // Read multiple valued data
+                    for(int i=0; i < paramValues.length; i++) {
+                        if (paramValues[i]!=null){
+                            Invitation invitation = new Invitation();
+                            invitation.
+                        }
+                       //out.println(" " + paramValues[i] + "</li>");
+                    }
+                    //}
+                }
+            }
         
         PrintWriter out = response.getWriter();
         try {
