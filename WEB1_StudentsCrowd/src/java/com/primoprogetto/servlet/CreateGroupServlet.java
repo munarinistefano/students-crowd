@@ -159,7 +159,7 @@ public class CreateGroupServlet extends HttpServlet {
                 }
             }
         }
-        response.sendRedirect(request.getContextPath() + "/GroupList"); //redirect to landing page
+        response.sendRedirect(request.getContextPath() + "/GroupList"); //redirect to group list page
     }
 
     /**

@@ -66,6 +66,9 @@ public class Invitation {
         return this.owner;
     }
     
+    /*
+     * Send an invitation
+     */
     public void addInvitation (int USER_ID, int GROUP_ID) throws SQLException{
         PreparedStatement stm = DBManager.executeInsertQuery(addInvitation);
         try {
@@ -78,6 +81,9 @@ public class Invitation {
         }
     }
 
+    /*
+     * Get all invitations
+     */
     public ArrayList<Invitation> getInvitation(int id) throws SQLException {
         ArrayList<Invitation> invitations = new ArrayList();
         ResultSet rs = DBManager.executeSelectQuery(getInvitation, id);
@@ -97,6 +103,9 @@ public class Invitation {
         return invitations;
     }
 
+    /*
+     * Change state of an invitation request: 0 pending, 1 accepted, 2 refused
+     */
     public void changeState(int user_id, int group_id, int state) throws SQLException {
         PreparedStatement stm = DBManager.executeInsertQuery(changeState);
         try {

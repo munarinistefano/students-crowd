@@ -77,15 +77,12 @@ public class InvitationServlet extends HttpServlet {
                     out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"    PENDING");
                     out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\"> <input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"accept\">");
                     out.println("<input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"refuse\">");
-                    //out.println("Refuse <form name=\""+invitations.get(i).getGroupID()+"\" action=\"Invitation\" method=\"POST\" value=\"refuse\">");
-                    //out.println("Accept <input type=\"submit\" name=\""+invitations.get(i).getGroupID()+"\" value=\"accept\"/>");
-                    //out.println("Refuse  <input type=\"radio\" name=\""+invitations.get(i).getGroupID()+"\" value=\"refuse\"/>");
-                    //out.println("</fieldset>");
                     out.println("</li>");
-                } else if (invitations.get(i).getState()==1)
+                } else if (invitations.get(i).getState()==1){
                     out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"   <p> ACCEPTED </p></li>");
-                else if (invitations.get(i).getState()==2)
+                }else if (invitations.get(i).getState()==2){
                     out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"   <p> REFUSED </p></li>");
+                }
             }
             out.println("</ul>");
             out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\">\n");
@@ -152,6 +149,7 @@ public class InvitationServlet extends HttpServlet {
                 }
             }
         }
+        response.sendRedirect(request.getContextPath() + "/Invitation"); //redirect to landing page
     }
 
     /**
