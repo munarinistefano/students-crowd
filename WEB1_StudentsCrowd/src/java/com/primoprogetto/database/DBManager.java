@@ -126,12 +126,18 @@ public class DBManager implements Serializable{
         }
     }
     
+    /*
+     * Method to call from other classes to execute SELECT queries
+     */
     public static ResultSet executeSelectQuery(String query) throws SQLException {
       PreparedStatement stm = con.prepareStatement(query);
       ResultSet rs = stm.executeQuery();
       return rs;
     }
     
+    /*
+     * Method to call from other classes to execute SELECT queries with a parameter 
+     */
     public static ResultSet executeSelectQuery(String query, int id) throws SQLException {
       PreparedStatement stm = con.prepareStatement(query);
       stm.setInt(1, id);
@@ -139,6 +145,9 @@ public class DBManager implements Serializable{
       return rs;
     }
     
+    /*
+     * Method to call from other classes to execute INSERT queries
+     */
     public static PreparedStatement executeInsertQuery(String query) throws SQLException {
       return con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
     }

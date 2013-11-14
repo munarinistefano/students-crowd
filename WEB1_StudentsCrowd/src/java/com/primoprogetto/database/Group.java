@@ -78,6 +78,9 @@ public class Group {
       return groups;
     }
     
+    /*
+     * Get all Groups
+     */
     public Group getGroup() throws SQLException {
         Group group = new Group();
         ResultSet rs = DBManager.executeSelectQuery(getAllGroups);
@@ -94,6 +97,9 @@ public class Group {
         return group;
     }
     
+    /*
+     * Create a new Group
+     */
     public int addGroup(String name, int ownerID, Date creationDate) throws SQLException {
         System.out.println("addGroup");
         int id = 0;
@@ -112,6 +118,9 @@ public class Group {
         return id;
     }
 
+    /*
+     * Get id of just created group (used in the function above)
+     */
     private int getId(PreparedStatement stm) throws SQLException {
         int id = 0;
         try {

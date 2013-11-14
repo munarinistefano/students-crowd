@@ -149,6 +149,7 @@ public class InvitationServlet extends HttpServlet {
                 }
             }
         }
+        response.sendRedirect(request.getContextPath() + "/Invitation"); //redirect to landing page
     }
 
     /**
