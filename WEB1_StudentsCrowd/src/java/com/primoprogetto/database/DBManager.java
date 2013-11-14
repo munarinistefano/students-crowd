@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -131,8 +132,8 @@ public class DBManager implements Serializable{
       return rs;
     }
     
-    public static void executeInsertQuery(String query) {
-      
+    public static PreparedStatement executeInsertQuery(String query) throws SQLException {
+      return con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
     }
     
 }

@@ -5,7 +5,9 @@
 package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
+import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
+import com.primoprogetto.database.Invitation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -68,11 +70,11 @@ public class CreateGroup extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<form name=\"input\" action=\"CreateGroup\" method=\"POST\">\n");
-            out.println("GroupName: <input type=\"text\" name=\"username\">");
+            out.println("GroupName: <input type=\"text\" name=\"groupname\">");
             out.println("<br> Owner: " + user.getUsername() + "<br>");
             out.println("<ul>");
             for (int i=0; i<userList.size(); i++){
-                out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getUsername() +">"+ userList.get(i).getUsername() + "</li>");
+                out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
             }
             
             out.println("</ul>");
@@ -117,41 +119,42 @@ public class CreateGroup extends HttpServlet {
 
         Enumeration paramNames = request.getParameterNames();
         
+        int group_id = 0;
         while(paramNames.hasMoreElements()) {
                 String paramName = (String)paramNames.nextElement();
-                //out.print("<li>" + paramName + " ");
                 
-                if (paramName.equals("groupname")){                 //get group name
-                    // Get the system date and time.
-                    java.util.Date utilDate = new java.util.Date();
-                    // Convert it to java.sql.Date
-                    java.sql.Date date = new java.sql.Date(utilDate.getTime());     //set creation date
-                    try {
-                        manager.addGroup(paramName, user.getID(), date);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
+                Group group = new Group();
+                
+                java.sql.Date date;
+                // Get the system date and time.
+                java.util.Date utilDate = new java.util.Date();
+                // Convert it to java.sql.Date
+                date = new java.sql.Date(utilDate.getTime());     //set creation date
+                
+                
                     String[] paramValues = request.getParameterValues(paramName);
-                    // Read single valued data
-                    /*if (paramValues.length == 1) {
-                        String paramValue = paramValues[0];
-                        if (paramValue.length() == 0)
-                            //out.println("<i>No Value</i>");
-                            //DO NOTHING
-                        else
-                            //out.println(paramValue);
-                    } else {*/
-                        // Read multiple valued data
                     for(int i=0; i < paramValues.length; i++) {
-                        if (paramValues[i]!=null){
+                        System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
+                        if (paramName.equals("groupname")){                 //get group name
+                            try {
+                                System.out.println("group name: "+paramValues[i]);
+                                group_id = group.addGroup(paramValues[i], user.getID(), date);
+                                System.out.println("group id: "+group_id);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
                             Invitation invitation = new Invitation();
-                            invitation.
+                            if (group_id!=0){
+                                try {
+                                    invitation.addInvitation(Integer.parseInt(paramName), group_id);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
                         }
-                       //out.println(" " + paramValues[i] + "</li>");
                     }
-                    //}
-                }
+                
             }
         
         PrintWriter out = response.getWriter();
@@ -164,7 +167,7 @@ public class CreateGroup extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            out.println("<br> Owner: " + user.getUsername() + "<br>");
+            out.println("<br> Owner: " + user.getUsername() + " " + group_id +"<br>");
             
             out.println("<ul>");
             out.println("</ul>");
