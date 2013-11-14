@@ -159,26 +159,7 @@ public class CreateGroupServlet extends HttpServlet {
                 }
             }
         }
-        
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateGroup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            
-            out.println("<br> Owner: " + user.getUsername() + " " + group_id +"<br>");
-            
-            out.println("<ul>");
-            out.println("</ul>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
-        }
+        response.sendRedirect(request.getContextPath() + "/GroupList"); //redirect to landing page
     }
 
     /**
