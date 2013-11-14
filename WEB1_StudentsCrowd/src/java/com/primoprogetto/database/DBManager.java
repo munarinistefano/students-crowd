@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class DBManager implements Serializable{
 
-    private Connection con;
+    private static Connection con;
     
     //Database tables name
     private static final String UserTable = "USERS";
@@ -124,4 +124,15 @@ public class DBManager implements Serializable{
             stm.close();
         }
     }
+    
+    public static ResultSet executeSelectQuery(String query) throws SQLException {
+      PreparedStatement stm = con.prepareStatement(query);
+      ResultSet rs = stm.executeQuery();
+      return rs;
+    }
+    
+    public static void executeInsertQuery(String query) {
+      
+    }
+    
 }
