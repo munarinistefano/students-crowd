@@ -7,6 +7,7 @@ package com.primoprogetto.servlet;
 import com.primoprogetto.database.DBManager;
 import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
+import com.primoprogetto.database.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -51,10 +52,10 @@ public class GroupListServlet extends HttpServlet {
     session = request.getSession();
         user = (User)session.getAttribute("user");
         
-        Group group = new Group();
+        User_Group userGroup = new User_Group();
         ArrayList <Group> groupList = new ArrayList();
         try {
-            groupList = group.getAllGroups();
+            groupList = userGroup.getMyGroups(user.getID());
         } catch (SQLException ex) {
             Logger.getLogger(Group.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,10 +71,13 @@ public class GroupListServlet extends HttpServlet {
       out.println("</head>");
       out.println("<body>");
       for (int i=0; i<groupList.size(); i++){
+                System.err.println(groupList.get(i).getName());
                 out.println(i+1 + ". " + groupList.get(i).getName() + " create by "
-                        + groupList.get(i).getIDOwner() + " in date: "
+                        + /*groupList.get(i).getIDOwner() +*/ " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");
             }
+            
+      out.println("ciao" + user.getID());
       out.println("</body>");
       out.println("</html>");
     } finally {      

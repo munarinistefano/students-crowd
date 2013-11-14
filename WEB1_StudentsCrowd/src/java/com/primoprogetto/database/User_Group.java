@@ -5,7 +5,9 @@
 package com.primoprogetto.database;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +18,7 @@ public class User_Group {
     private int role;                       //0 normal user - 1 administrator
     
     private String insertQuery = "INSERT INTO USERGROUP (USER_ID,GROUP_ID,ROLE) VALUES (?,?,?)";
+    private String getMyGroups = "SELECT * FROM USERGROUP JOIN USERS ON USERGROUP.USER_ID = USERS.ID JOIN GROUPS ON USERGROUP.GROUP_ID = GROUPS.ID WHERE USERGROUP.USER_ID = ?";
 
     
     public void setUserID(int UserID){
@@ -52,5 +55,24 @@ public class User_Group {
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
         }
+    }
+    
+    public ArrayList<Group> getMyGroups(int id) throws SQLException {
+      ArrayList<Group> groups = new ArrayList();
+      ResultSet rs = DBManager.executeSelectQuery(getMyGroups, id);
+      try {
+        while (rs.next()) {
+          Group group = new Group();
+          group.setID(rs.getInt(7));
+          group.setName(rs.getString(8));
+          //group.setOwnerID(rs.getInt(5));
+          group.setCreationDate(rs.getDate(10));
+          
+          groups.add(group);
+        }
+      } finally {
+        rs.close();
+      }
+      return groups;
     }
 }
