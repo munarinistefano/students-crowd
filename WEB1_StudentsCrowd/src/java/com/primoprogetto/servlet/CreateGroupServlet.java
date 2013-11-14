@@ -8,6 +8,7 @@ import com.primoprogetto.database.DBManager;
 import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
 import com.primoprogetto.database.Invitation;
+import com.primoprogetto.database.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -124,6 +125,8 @@ public class CreateGroupServlet extends HttpServlet {
             String paramName = (String)paramNames.nextElement();
 
             Group group = new Group();
+            
+            User_Group user_group = new User_Group();
 
             java.sql.Date date;
             // Get the system date and time.
@@ -147,6 +150,7 @@ public class CreateGroupServlet extends HttpServlet {
                     Invitation invitation = new Invitation();
                     if (group_id!=0){
                         try {
+                            user_group.add(user.getID(),group_id,1);
                             invitation.addInvitation(Integer.parseInt(paramName), group_id);
                         } catch (SQLException ex) {
                             Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -23,7 +23,7 @@ public class Invitation {
     private static final String InvitationTable = "INVITATIONS";
     private String addInvitation = "INSERT INTO "+InvitationTable+" (" + user_id + "," + group_id+ ") VALUES (?,?)";
     private String getInvitation = "SELECT * FROM INVITATIONS JOIN GROUPS ON INVITATIONS.GROUP_ID = GROUPS.ID JOIN USERS ON USERS.ID = GROUPS.OWNER_ID WHERE INVITATIONS.USER_ID = ?";
-    String changeState = "UPDATE APP.INVITATIONS set STATE = ? where USER_ID = ? AND GROUP_ID = ?";
+    String changeState = "UPDATE INVITATIONS set STATE = ? where USER_ID = ? AND GROUP_ID = ?";
     
     
     public void setGroupID(int GroupID){

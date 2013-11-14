@@ -75,8 +75,9 @@ public class InvitationServlet extends HttpServlet {
             for (int i=0; i<invitations.size(); i++){
                 if (invitations.get(i).getState()==0){
                     out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"    PENDING");
-                    out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\"> <input type=\"submit\" value=\"accept\">");
-                    out.println("Refuse <form name=\""+invitations.get(i).getGroupID()+"\" action=\"Invitation\" method=\"POST\" value=\"refuse\">");
+                    out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\"> <input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"accept\">");
+                    out.println("<input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"refuse\">");
+                    //out.println("Refuse <form name=\""+invitations.get(i).getGroupID()+"\" action=\"Invitation\" method=\"POST\" value=\"refuse\">");
                     //out.println("Accept <input type=\"submit\" name=\""+invitations.get(i).getGroupID()+"\" value=\"accept\"/>");
                     //out.println("Refuse  <input type=\"radio\" name=\""+invitations.get(i).getGroupID()+"\" value=\"refuse\"/>");
                     //out.println("</fieldset>");
