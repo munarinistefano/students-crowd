@@ -86,8 +86,9 @@ public class Invitation {
                 Invitation invitation = new Invitation();
                 invitation.setUserID(rs.getInt(1));
                 invitation.setGroupID(rs.getInt(2));
-                invitation.setGroupName(rs.getString(4));
-                invitation.setOwnerName(rs.getString(8));
+                invitation.setState(rs.getInt(3));
+                invitation.setGroupName(rs.getString(5));
+                invitation.setOwnerName(rs.getString(9));
                 invitations.add(invitation);
             }
         } finally {
