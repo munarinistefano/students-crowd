@@ -20,6 +20,10 @@
         <servlet-name>CreateGroup</servlet-name>
         <servlet-class>com.primoprogetto.servlet.CreateGroup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GroupList</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.GroupList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
@@ -50,6 +54,10 @@
         <param-name>dburl</param-name>
         <param-value>jdbc:derby://localhost:1527/PrimoProgetto</param-value>
     </context-param>
+    <servlet-mapping>
+        <servlet-name>GroupList</servlet-name>
+        <url-pattern>/GroupList</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

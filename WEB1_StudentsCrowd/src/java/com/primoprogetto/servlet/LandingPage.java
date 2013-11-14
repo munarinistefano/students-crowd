@@ -61,6 +61,8 @@ public class LandingPage extends HttpServlet {
             out.println("<br><br>");
             out.println("<a href=\"Invitation\">Invitation</a>");
             out.println("<br><br>");
+            out.println("<a href=\"GroupList\">My groups</a>");
+            out.println("<br><br>");
             out.println("<h3>Ultimo Login: " + getLastLogin() + "</h3>");
             out.println("Time of Last Access" + new Date(session.getLastAccessedTime()));
             out.println("<br><br>");
