@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class LandingPage extends HttpServlet {
+public class LandingPageServlet extends HttpServlet {
     private User user;
     private HttpSession session;
     Cookie[] cookies;

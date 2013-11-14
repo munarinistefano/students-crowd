@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alan
  */
-public class GroupList extends HttpServlet {
+public class GroupListServlet extends HttpServlet {
   DBManager manager;
     HttpSession session;
     User user;

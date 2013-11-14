@@ -78,6 +78,22 @@ public class Group {
       return groups;
     }
     
+    public Group getGroup() throws SQLException {
+        Group group = new Group();
+        ResultSet rs = DBManager.executeSelectQuery(getAllGroups);
+        try {
+            while (rs.next()) {
+              group.setID(rs.getInt(1));
+              group.setName(rs.getString(2));
+              group.setOwnerID(rs.getInt(3));
+              group.setCreationDate(rs.getDate(4));
+            }
+        } finally {
+          rs.close();
+        }
+        return group;
+    }
+    
     public int addGroup(String name, int ownerID, Date creationDate) throws SQLException {
         System.out.println("addGroup");
         int id = 0;

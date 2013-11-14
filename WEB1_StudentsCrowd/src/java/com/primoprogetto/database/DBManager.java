@@ -132,6 +132,13 @@ public class DBManager implements Serializable{
       return rs;
     }
     
+    public static ResultSet executeSelectQuery(String query, int id) throws SQLException {
+      PreparedStatement stm = con.prepareStatement(query);
+      stm.setInt(1, id);
+      ResultSet rs = stm.executeQuery();
+      return rs;
+    }
+    
     public static PreparedStatement executeInsertQuery(String query) throws SQLException {
       return con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
     }

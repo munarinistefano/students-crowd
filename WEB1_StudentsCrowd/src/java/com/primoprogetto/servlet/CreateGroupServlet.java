@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class CreateGroup extends HttpServlet {
+public class CreateGroupServlet extends HttpServlet {
     DBManager manager;
     HttpSession session;
     User user;
@@ -57,7 +57,7 @@ public class CreateGroup extends HttpServlet {
         try {
             userList = manager.getAllUser();
         } catch (SQLException ex) {
-            Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         PrintWriter out = response.getWriter();
@@ -121,41 +121,40 @@ public class CreateGroup extends HttpServlet {
         
         int group_id = 0;
         while(paramNames.hasMoreElements()) {
-                String paramName = (String)paramNames.nextElement();
-                
-                Group group = new Group();
-                
-                java.sql.Date date;
-                // Get the system date and time.
-                java.util.Date utilDate = new java.util.Date();
-                // Convert it to java.sql.Date
-                date = new java.sql.Date(utilDate.getTime());     //set creation date
-                
-                
-                    String[] paramValues = request.getParameterValues(paramName);
-                    for(int i=0; i < paramValues.length; i++) {
-                        System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
-                        if (paramName.equals("groupname")){                 //get group name
-                            try {
-                                System.out.println("group name: "+paramValues[i]);
-                                group_id = group.addGroup(paramValues[i], user.getID(), date);
-                                System.out.println("group id: "+group_id);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        } else {
-                            Invitation invitation = new Invitation();
-                            if (group_id!=0){
-                                try {
-                                    invitation.addInvitation(Integer.parseInt(paramName), group_id);
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
+            String paramName = (String)paramNames.nextElement();
+
+            Group group = new Group();
+
+            java.sql.Date date;
+            // Get the system date and time.
+            java.util.Date utilDate = new java.util.Date();
+            // Convert it to java.sql.Date
+            date = new java.sql.Date(utilDate.getTime());     //set creation date
+
+
+            String[] paramValues = request.getParameterValues(paramName);
+            for(int i=0; i < paramValues.length; i++) {
+                System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
+                if (paramName.equals("groupname")){                 //get group name
+                    try {
+                        System.out.println("group name: "+paramValues[i]);
+                        group_id = group.addGroup(paramValues[i], user.getID(), date);
+                        System.out.println("group id: "+group_id);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    Invitation invitation = new Invitation();
+                    if (group_id!=0){
+                        try {
+                            invitation.addInvitation(Integer.parseInt(paramName), group_id);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                
+                }
             }
+        }
         
         PrintWriter out = response.getWriter();
         try {

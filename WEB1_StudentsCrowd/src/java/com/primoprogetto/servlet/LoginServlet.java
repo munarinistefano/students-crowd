@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class Login extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     private DBManager manager;
     private String username,password;

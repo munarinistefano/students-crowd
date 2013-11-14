@@ -2,27 +2,27 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.Logout</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.Login</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LandingPage</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.LandingPage</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.LandingPageServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Invitation</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.Invitation</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.InvitationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateGroup</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.CreateGroup</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.CreateGroupServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GroupList</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.GroupList</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.GroupListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
