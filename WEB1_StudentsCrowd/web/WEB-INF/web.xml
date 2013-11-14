@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LandingPage</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.LandingPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Invitation</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Invitation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateGroup</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.CreateGroup</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LandingPage</servlet-name>
+        <url-pattern>/LandingPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Invitation</servlet-name>
+        <url-pattern>/Invitation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroup</servlet-name>
+        <url-pattern>/CreateGroup</url-pattern>
+    </servlet-mapping>
+    <!--CONTEXT LISTENER-->
+    <listener>
+        <description>listener</description>
+        <listener-class>com.primoprogetto.listeners.WebappContextListener</listener-class>
+    </listener>
+    <!-- URL DATABASE -->
+    <context-param>
+        <param-name>dburl</param-name>
+        <param-value>jdbc:derby://localhost:1527/PrimoProgetto</param-value>
+    </context-param>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
