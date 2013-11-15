@@ -22,7 +22,8 @@ public class Invitation {
     private String group_id = "group_id";
     private static final String InvitationTable = "INVITATIONS";
     private String addInvitation = "INSERT INTO "+InvitationTable+" (" + user_id + "," + group_id+ ") VALUES (?,?)";
-    private String getInvitation = "SELECT * FROM INVITATIONS JOIN GROUPS ON INVITATIONS.GROUP_ID = GROUPS.ID JOIN USERS ON USERS.ID = GROUPS.OWNER_ID WHERE INVITATIONS.USER_ID = ?";
+    private String addInvitationWithState = "INSERT INTO "+InvitationTable+" (" + user_id + "," + group_id + ",state) VALUES (?,?,?)";
+    private String getInvitation = "SELECT * FROM INVITATIONS JOIN GROUPS ON INVITATIONS.GROUP_ID = GROUPS.ID JOIN USERS ON USERS.ID = GROUPS.OWNER_ID WHERE INVITATIONS.USER_ID = ? ORDER BY INVITATIONS.state";
     String changeState = "UPDATE INVITATIONS set STATE = ? where USER_ID = ? AND GROUP_ID = ?";
     
     
@@ -74,6 +75,22 @@ public class Invitation {
         try {
             stm.setInt(1, USER_ID);
             stm.setInt(2, GROUP_ID);
+            stm.executeUpdate();
+            System.out.println("addInvitation");
+        } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
+            stm.close();
+        }
+    }
+    
+    /*
+     * Send an invitation
+     */
+    public void addInvitation (int USER_ID, int GROUP_ID, int state) throws SQLException{
+        PreparedStatement stm = DBManager.executeInsertQuery(addInvitationWithState);
+        try {
+            stm.setInt(1, USER_ID);
+            stm.setInt(2, GROUP_ID);
+            stm.setInt(3, state);
             stm.executeUpdate();
             System.out.println("addInvitation");
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally

@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author Stefano
  */
 public class Group {
-    ResultSet generatedKeys = null;
+    ResultSet generatedKey = null;
     private static final String GroupTable = "GROUPS";
     private int ID,OwnerID;
     private String name;
@@ -135,23 +135,23 @@ public class Group {
             id = getId(stm);
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
-            if (generatedKeys != null) try {generatedKeys.close();} catch (SQLException logOrIgnore) {}
+            if (generatedKey != null) try {generatedKey.close();} catch (SQLException logOrIgnore) {}
         }
         return id;
     }
 
     /*
-     * Get id of just created group (used in the function above)
+     * Get id of just created group. Used to get the id of the just created Group
      */
     private int getId(PreparedStatement stm) throws SQLException {
         int id = 0;
         try {
-            generatedKeys = stm.getGeneratedKeys();
+            generatedKey = stm.getGeneratedKeys();
         } catch (SQLException ex) {
             Logger.getLogger(Group.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (generatedKeys.next()) {
-            id = generatedKeys.getInt(1);
+        if (generatedKey.next()) {
+            id = generatedKey.getInt(1);
         } else {
             throw new SQLException("add group failed, no generated key obtained.");
         }

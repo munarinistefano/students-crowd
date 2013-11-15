@@ -125,7 +125,7 @@ public class CreateGroupServlet extends HttpServlet {
             String paramName = (String)paramNames.nextElement();
 
             Group group = new Group();
-            
+            Invitation invitation = new Invitation();
             User_Group user_group = new User_Group();
 
             java.sql.Date date;
@@ -142,12 +142,12 @@ public class CreateGroupServlet extends HttpServlet {
                     try {
                         System.out.println("group name: "+paramValues[i]);
                         group_id = group.addGroup(paramValues[i], user.getID(), date);
+                        invitation.addInvitation(user.getID(), group_id,1);
                         System.out.println("group id: "+group_id);
                     } catch (SQLException ex) {
                         Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    Invitation invitation = new Invitation();
                     if (group_id!=0){
                         try {
                             user_group.add(user.getID(),group_id,1);
