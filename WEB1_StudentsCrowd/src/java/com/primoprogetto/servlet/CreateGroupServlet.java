@@ -75,7 +75,11 @@ public class CreateGroupServlet extends HttpServlet {
             out.println("<br> Owner: " + user.getUsername() + "<br>");
             out.println("<ul>");
             for (int i=0; i<userList.size(); i++){
+              if (userList.get(i).getID() == user.getID()) {
+                out.println("&nbsp;");
+              } else {
                 out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
+              }
             }
             
             out.println("</ul>");
