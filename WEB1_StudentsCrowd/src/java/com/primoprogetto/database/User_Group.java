@@ -82,13 +82,8 @@ public class User_Group {
           Group group = new Group();
           group.setID(rs.getInt(7));
           group.setName(rs.getString(8));
-          //group.setOwnerID(rs.getInt(5));
-          // group.setID(rs.getInt(2));
           group.setCreationDate(rs.getDate(10));
           group.setOwnerName(rs.getInt(7));
-          //User_Group userGroup = new User_Group();
-          //userGroup.setOwnerName(rs.getInt(7));
-          
           groups.add(group);
         }
       } finally {

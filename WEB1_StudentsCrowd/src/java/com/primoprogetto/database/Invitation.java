@@ -83,7 +83,7 @@ public class Invitation {
     }
     
     /*
-     * Send an invitation
+     * Send an invitation with state
      */
     public void addInvitation (int USER_ID, int GROUP_ID, int state) throws SQLException{
         PreparedStatement stm = DBManager.executeInsertQuery(addInvitationWithState);

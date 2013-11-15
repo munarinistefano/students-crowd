@@ -43,11 +43,11 @@ public class AddPostServlet extends HttpServlet {
         User user = (User)session.getAttribute("user");
         Post post = new Post();
         
-        java.sql.Date date;
         // Get the system date and time.
         java.util.Date utilDate = new java.util.Date();
         // Convert it to java.sql.Date
-        date = new java.sql.Date(utilDate.getTime());
+        java.sql.Date date = new java.sql.Date(utilDate.getTime());
+        
         try {
             System.err.println("Text:" + text +" "+ user.getID() +" "+ group_id +" "+ date);
             post.addPost(text, user.getID(), group_id ,date);

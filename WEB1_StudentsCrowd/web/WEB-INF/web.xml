@@ -53,6 +53,14 @@
         <url-pattern>/CreateGroup</url-pattern>
     </servlet-mapping>
     <!--CONTEXT LISTENER-->
+    <filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <listener>
         <description>listener</description>
         <listener-class>com.primoprogetto.listeners.WebappContextListener</listener-class>
