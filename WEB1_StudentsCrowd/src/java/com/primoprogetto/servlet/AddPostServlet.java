@@ -49,6 +49,7 @@ public class AddPostServlet extends HttpServlet {
         // Convert it to java.sql.Date
         date = new java.sql.Date(utilDate.getTime());
         try {
+            System.err.println("Text:" + text +" "+ user.getID() +" "+ group_id +" "+ date);
             post.addPost(text, user.getID(), group_id ,date);
         } catch (SQLException ex) {
             Logger.getLogger(AddPostServlet.class.getName()).log(Level.SEVERE, null, ex);

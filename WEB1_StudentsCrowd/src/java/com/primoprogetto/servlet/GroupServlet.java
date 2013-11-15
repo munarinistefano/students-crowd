@@ -64,7 +64,7 @@ public class GroupServlet extends HttpServlet {
                     out.println("<li>");
                     out.println("Post id: "+posts.get(i).getID());
                     out.println("Post text: "+posts.get(i).getText());
-                    out.println("Post group_id: "+posts.get(i).getGroupId());
+                    out.println("Group_id: "+posts.get(i).getGroupId());
                     out.println("User id: "+posts.get(i).getUserID());
                     out.println("Post date: "+posts.get(i).getDate());
                     out.println("</li>");

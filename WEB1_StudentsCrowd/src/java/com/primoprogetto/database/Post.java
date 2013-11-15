@@ -33,7 +33,7 @@ public class Post {
     }
     
     public void setGroupID(int GroupId){
-        this.GroupID=GroupID;
+        this.GroupID=GroupId;
     }
     
     public void setDate(Date date){
@@ -66,6 +66,7 @@ public class Post {
     
     public ArrayList<Post> getAllPosts(int group_id) throws SQLException{
         ArrayList<Post> posts = new ArrayList();
+        System.err.println("Group_id: "+group_id);
         ResultSet rs = DBManager.executeSelectQuery(getAllPosts,group_id);
         try {
             while (rs.next()) {
@@ -73,7 +74,8 @@ public class Post {
                 post.setID(rs.getInt(1));
                 post.setText(rs.getString(2));
                 post.setGroupID(rs.getInt(3));
-                post.setUserID(4);
+                System.err.println("Group_id: "+rs.getInt(3));
+                post.setUserID(rs.getInt(4));
                 post.setDate(rs.getDate(5));
                 posts.add(post);
             }
