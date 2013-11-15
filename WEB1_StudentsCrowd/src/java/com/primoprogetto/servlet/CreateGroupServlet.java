@@ -137,13 +137,12 @@ public class CreateGroupServlet extends HttpServlet {
 
             String[] paramValues = request.getParameterValues(paramName);
             for(int i=0; i < paramValues.length; i++) {
-                System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
                 if (paramName.equals("groupname")){                 //get group name
                     try {
-                        System.out.println("group name: "+paramValues[i]);
+                        
                         group_id = group.addGroup(paramValues[i], user.getID(), date);
                         invitation.addInvitation(user.getID(), group_id,1);
-                        System.out.println("group id: "+group_id);
+                        
                     } catch (SQLException ex) {
                         Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }

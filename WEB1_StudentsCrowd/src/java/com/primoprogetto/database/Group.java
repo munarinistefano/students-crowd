@@ -82,22 +82,22 @@ public class Group {
     //////////////////////////
     
     public ArrayList<Group> getAllGroups() throws SQLException {
-      ArrayList<Group> groups = new ArrayList();
-      ResultSet rs = DBManager.executeSelectQuery(getAllGroups);
-      try {
-        while (rs.next()) {
-          Group group = new Group();
-          group.setID(rs.getInt(1));
-          group.setName(rs.getString(2));
-          group.setOwnerID(rs.getInt(3));
-          group.setCreationDate(rs.getDate(4));
-          
-          groups.add(group);
+        ArrayList<Group> groups = new ArrayList();
+        ResultSet rs = DBManager.executeSelectQuery(getAllGroups);
+        try {
+            while (rs.next()) {
+                Group group = new Group();
+                group.setID(rs.getInt(1));
+                group.setName(rs.getString(2));
+                group.setOwnerID(rs.getInt(3));
+                group.setCreationDate(rs.getDate(4));
+
+                groups.add(group);
+            }
+        } finally {
+            rs.close();
         }
-      } finally {
-        rs.close();
-      }
-      return groups;
+        return groups;
     }
     
     /*

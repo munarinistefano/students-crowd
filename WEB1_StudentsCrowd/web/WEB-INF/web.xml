@@ -24,6 +24,14 @@
         <servlet-name>GroupList</servlet-name>
         <servlet-class>com.primoprogetto.servlet.GroupListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPostServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.AddPostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GroupServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.GroupServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
@@ -57,6 +65,14 @@
     <servlet-mapping>
         <servlet-name>GroupList</servlet-name>
         <url-pattern>/GroupList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPostServlet</servlet-name>
+        <url-pattern>/AddPostServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupServlet</servlet-name>
+        <url-pattern>/GroupServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

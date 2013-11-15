@@ -50,7 +50,7 @@ public class GroupListServlet extends HttpServlet {
           throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     
-    session = request.getSession();
+        session = request.getSession();
         user = (User)session.getAttribute("user");
         
         User_Group userGroup = new User_Group();
@@ -62,29 +62,28 @@ public class GroupListServlet extends HttpServlet {
         }
        
     
-    PrintWriter out = response.getWriter();
-    try {
-        /* TODO output your page here. You may use following sample code. */
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet GroupList</title>");      
-        out.println("</head>");
-        out.println("<body>");
-        for (int i=0; i<groupList.size(); i++){
-            //System.err.println(groupList.get(i).getName());
-            //System.err.println(groupList.get(i).getOwnerName());
-            out.println(i+1 + ". <a href=" + groupList.get(i).getID() + ">" + 
-                    groupList.get(i).getName() + "</a> create by "
-                    + groupList.get(i).getOwnerName() + " in date: "
-                    + groupList.get(i).getCreationDate() + ";<br />");
-      }
-      //out.println("ciao" + user.getID());
-      out.println("</body>");
-      out.println("</html>");
-    } finally {      
-      out.close();
-    }
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet GroupList</title>");      
+            out.println("</head>");
+            out.println("<body>");
+            for (int i=0; i<groupList.size(); i++){
+                //System.err.println(groupList.get(i).getName());
+                //System.err.println(groupList.get(i).getOwnerName());
+                out.println(i+1 + ". <a href=GroupServlet?id=" + groupList.get(i).getID() + ">" + 
+                        groupList.get(i).getName() + "</a> create by "
+                        + groupList.get(i).getOwnerName() + " in date: "
+                        + groupList.get(i).getCreationDate() + ";<br />");
+            }
+            out.println("</body>");
+            out.println("</html>");
+        } finally {      
+            out.close();
+        }
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
