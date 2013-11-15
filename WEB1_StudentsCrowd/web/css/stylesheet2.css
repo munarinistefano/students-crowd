@@ -82,8 +82,8 @@ a {
 	/*background: #12557F;*/
 	height: 60px;
 	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-background: -moz-linear-gradient(100% 100% 90deg, #12557F, #5988A5);
-   background: -webkit-gradient(linear, right top, left bottom, from(red), to(yellow));
+        background: -moz-linear-gradient(100% 100% 90deg, #12557F, #5988A5);
+        background: -webkit-gradient(linear, right top, left bottom, from(#12557F), to(#5988A5));
     }
 
 #logo {
@@ -134,9 +134,9 @@ background: -moz-linear-gradient(100% 100% 90deg, #12557F, #5988A5);
 	/*background-color: #D0DDE5;*/
 	margin: 100px;
 		background: -moz-linear-gradient(100% 100% 90deg, #A0BBCC, #D0DDE5);
-   background: -webkit-gradient(linear, right top, left bottom, from(red), to(yellow));
-    padding-top: 70px;
-    height: 150px;
+        background: -webkit-gradient(linear, right top, left bottom, from(#A0BBCC), to(#D0DDE5));
+        padding-top: 70px;
+        height: 150px;
 }
 
 #invitations:hover {
@@ -157,7 +157,7 @@ background: -moz-linear-gradient(100% 100% 90deg, #12557F, #5988A5);
 	margin: 100px;
 	vertical-align: center;
 	background: -moz-linear-gradient(100% 100% 90deg, #A0BBCC, #D0DDE5);
-   background: -webkit-gradient(linear, right top, left bottom, from(red), to(yellow));
+   background: -webkit-gradient(linear, right top, left bottom, from(#A0BBCC), to(#D0DDE5));
     padding-top: 70px;
     height: 150px;
 }
@@ -180,7 +180,7 @@ background: -moz-linear-gradient(100% 100% 90deg, #12557F, #5988A5);
 	box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
 	/*background-color: #D0DDE5;*/
 		background: -moz-linear-gradient(100% 100% 90deg, #A0BBCC, #D0DDE5);
-   background: -webkit-gradient(linear, right top, left bottom, from(red), to(yellow));
+   background: -webkit-gradient(linear, right top, left bottom, from(#A0BBCC), to(#D0DDE5));
     padding-top: 70px;
     height: 150px;
 }

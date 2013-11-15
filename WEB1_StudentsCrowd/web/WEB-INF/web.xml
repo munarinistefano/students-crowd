@@ -59,7 +59,14 @@
     </filter>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/LandingPage</url-pattern>
+        <url-pattern>/Invitation</url-pattern>
+        <url-pattern>/GroupList</url-pattern>
+        <url-pattern>/AddPostServlet</url-pattern>
+        <url-pattern>/GroupServlet</url-pattern>
+        <url-pattern>/CreateGroup</url-pattern>
+        <url-pattern>/Logout</url-pattern>
+        <url-pattern>/InvitationServlet</url-pattern>
     </filter-mapping>
     <listener>
         <description>listener</description>
