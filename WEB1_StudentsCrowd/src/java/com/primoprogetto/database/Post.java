@@ -21,7 +21,7 @@ public class Post {
     
     private static final String PostTable = "POSTS";
     
-    private String getAllPosts = "SELECT * FROM "+ PostTable + " WHERE GROUP_ID = ?";
+    private String getAllPosts = "SELECT * FROM POSTS JOIN USERGROUP ON POSTS.GROUP_ID = ? AND USERGROUP.GROUP_ID = POSTS.GROUP_ID AND USERGROUP.USER_ID = ?";
     private final String addPost = "INSERT INTO " + PostTable + " (TEXT,GROUP_ID,USER_ID,DATE) VALUES (?,?,?,?)";
     
     public void setID(int ID){
@@ -64,17 +64,15 @@ public class Post {
         return this.date;
     }
     
-    public ArrayList<Post> getAllPosts(int group_id) throws SQLException{
+    public ArrayList<Post> getAllPosts(int group_id, int user_id) throws SQLException{
         ArrayList<Post> posts = new ArrayList();
-        System.err.println("Group_id: "+group_id);
-        ResultSet rs = DBManager.executeSelectQuery(getAllPosts,group_id);
+        ResultSet rs = DBManager.executeSelectQuery(getAllPosts,group_id,user_id);
         try {
             while (rs.next()) {
                 Post post = new Post();
                 post.setID(rs.getInt(1));
                 post.setText(rs.getString(2));
                 post.setGroupID(rs.getInt(3));
-                System.err.println("Group_id: "+rs.getInt(3));
                 post.setUserID(rs.getInt(4));
                 post.setDate(rs.getDate(5));
                 posts.add(post);

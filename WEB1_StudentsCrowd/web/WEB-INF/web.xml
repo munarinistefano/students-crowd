@@ -57,16 +57,17 @@
         <filter-name>SessionFilter</filter-name>
         <filter-class>com.primoprogetto.filters.SessionFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>GroupFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.GroupFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>GroupFilter</filter-name>
+        <servlet-name>GroupServlet</servlet-name>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
         <url-pattern>/LandingPage</url-pattern>
-        <url-pattern>/Invitation</url-pattern>
-        <url-pattern>/GroupList</url-pattern>
-        <url-pattern>/AddPostServlet</url-pattern>
-        <url-pattern>/GroupServlet</url-pattern>
-        <url-pattern>/CreateGroup</url-pattern>
-        <url-pattern>/Logout</url-pattern>
-        <url-pattern>/InvitationServlet</url-pattern>
     </filter-mapping>
     <listener>
         <description>listener</description>

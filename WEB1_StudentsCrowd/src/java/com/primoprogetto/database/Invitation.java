@@ -87,6 +87,7 @@ public class Invitation {
      */
     public void addInvitation (int USER_ID, int GROUP_ID, int state) throws SQLException{
         PreparedStatement stm = DBManager.executeInsertQuery(addInvitationWithState);
+        System.err.println("user_id: "+USER_ID+" GROUP_ID: "+GROUP_ID+" STATE:"+state);
         try {
             stm.setInt(1, USER_ID);
             stm.setInt(2, GROUP_ID);

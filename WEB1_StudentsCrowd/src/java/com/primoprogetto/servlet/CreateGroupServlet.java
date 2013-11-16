@@ -54,7 +54,7 @@ public class CreateGroupServlet extends HttpServlet {
         session = request.getSession();
         user = (User)session.getAttribute("user");
         
-        ArrayList <User> userList = new ArrayList();
+        ArrayList<User> userList = new ArrayList();
         try {
             userList = manager.getAllUser();
         } catch (SQLException ex) {
@@ -74,12 +74,13 @@ public class CreateGroupServlet extends HttpServlet {
             out.println("GroupName: <input type=\"text\" name=\"groupname\">");
             out.println("<br> Owner: " + user.getUsername() + "<br>");
             out.println("<ul>");
+            
             for (int i=0; i<userList.size(); i++){
-              if (userList.get(i).getID() == user.getID()) {
-                out.println("&nbsp;");
-              } else {
-                out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
-              }
+                if (userList.get(i).getID() == user.getID()) {
+                  out.println("&nbsp;");
+                } else {
+                  out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
+                }
             }
             
             out.println("</ul>");
@@ -126,7 +127,7 @@ public class CreateGroupServlet extends HttpServlet {
         
         int group_id = 0;
         while(paramNames.hasMoreElements()) {
-            String paramName = (String)paramNames.nextElement();
+            String paramName = (String)paramNames.nextElement();  //get single parameter
 
             Group group = new Group();
             Invitation invitation = new Invitation();
@@ -138,22 +139,20 @@ public class CreateGroupServlet extends HttpServlet {
             // Convert it to java.sql.Date
             date = new java.sql.Date(utilDate.getTime());     //set creation date
 
-
+            
             String[] paramValues = request.getParameterValues(paramName);
             for(int i=0; i < paramValues.length; i++) {
                 if (paramName.equals("groupname")){                 //get group name
                     try {
-                        
                         group_id = group.addGroup(paramValues[i], user.getID(), date);
                         invitation.addInvitation(user.getID(), group_id,1);
-                        
+                        user_group.add(user.getID(),group_id,1);
                     } catch (SQLException ex) {
                         Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else {
+                } else {                                            //get selected checkboxes
                     if (group_id!=0){
-                        try {
-                            user_group.add(user.getID(),group_id,1);
+                        try {                               
                             invitation.addInvitation(Integer.parseInt(paramName), group_id);
                         } catch (SQLException ex) {
                             Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);

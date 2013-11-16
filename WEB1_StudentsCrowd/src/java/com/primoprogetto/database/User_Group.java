@@ -21,6 +21,7 @@ public class User_Group {
     private String insertQuery = "INSERT INTO USERGROUP (USER_ID,GROUP_ID,ROLE) VALUES (?,?,?)";
     private String getMyGroups = "SELECT * FROM USERGROUP JOIN USERS ON USERGROUP.USER_ID = USERS.ID JOIN GROUPS ON USERGROUP.GROUP_ID = GROUPS.ID WHERE USERGROUP.USER_ID = ?";
     private String getOwnerName = "SELECT USERNAME FROM USERS JOIN GROUPS ON USERS.ID = GROUPS.OWNER_ID WHERE GROUPS.ID = ?";
+    private String isPartOfAGroup = "SELECT * FROM USERGROUP WHERE USER_ID = ? AND GROUP_ID = ?";
     
     public void setUserID(int UserID){
         this.UserID=UserID;
@@ -93,15 +94,30 @@ public class User_Group {
     }
     
     public String getOwnerName(int id) throws SQLException {
-      ResultSet rs = DBManager.executeSelectQuery(getOwnerName);
-      String ownerName = "ciao";
-      try {
-        while (rs.next()) {
+        ResultSet rs = DBManager.executeSelectQuery(getOwnerName);
+        String ownerName = "ciao";
+        try {
+            while (rs.next()) {
 
+            }
+        } finally {
+            rs.close();
         }
-      } finally {
-        rs.close();
-      }
-      return ownerName;
+        return ownerName;
     }
+    
+    /*public boolean isPartOfAGroup(int user_id, int group_id) throws SQLException{
+        boolean isIt=false;
+        int i=0;
+        ResultSet rs = DBManager.executeSelectQuery(isPartOfAGroup, user_id, group_id);
+        try {
+            while (rs.next()) {
+              i++;
+            }
+        } finally {
+            if (i>0){isIt=true;}
+            rs.close();
+        }
+        return isIt;
+    }*/
 }

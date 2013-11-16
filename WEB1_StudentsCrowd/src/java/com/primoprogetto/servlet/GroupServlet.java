@@ -5,6 +5,8 @@
 package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.Post;
+import com.primoprogetto.database.User;
+import com.primoprogetto.database.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,11 +40,15 @@ public class GroupServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         int group_id = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
         
         Post post = new Post();
         ArrayList<Post> posts = null;
+        
+        
         try {
-            posts = post.getAllPosts(group_id);
+            posts = post.getAllPosts(group_id,user.getID());
         } catch (SQLException ex) {
             Logger.getLogger(GroupServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

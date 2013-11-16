@@ -76,7 +76,7 @@ public class Group {
         }
     }
     
-        public String getOwnerName(){
+    public String getOwnerName(){
         return this.ownerName;
     }
     //////////////////////////
