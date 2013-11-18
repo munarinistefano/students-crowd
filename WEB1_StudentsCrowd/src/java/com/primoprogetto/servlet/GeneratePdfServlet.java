@@ -107,7 +107,7 @@ public class GeneratePdfServlet extends HttpServlet {
         if (post.getNumberOfPostsOfAUser() == 0) {
           document.add(new Paragraph("No post inserted!"));
         } else {
-          document.add(new Paragraph("date last post: " + post.getDateOfLastPostOfAUser()));
+          document.add(new Paragraph("Last post: " + post.getDateOfLastPostOfAUser()));
         }
             
         document.add(new Paragraph("---------------------------------"));
