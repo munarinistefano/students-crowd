@@ -67,6 +67,10 @@
         <servlet-name>GeneratePdfServlet</servlet-name>
         <url-pattern>/GeneratePdfServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPostServlet</servlet-name>
+        <url-pattern>/AddPostServlet</url-pattern>
+    </servlet-mapping>
     <!--SERVLET MAPPING (ONLY HTML SERVLETS) -->
     <servlet-mapping>
         <servlet-name>LandingPage</servlet-name>
@@ -75,10 +79,6 @@
     <servlet-mapping>
         <servlet-name>GroupList</servlet-name>
         <url-pattern>/GroupList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddPostServlet</servlet-name>
-        <url-pattern>/AddPostServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Group</servlet-name>
@@ -103,11 +103,23 @@
     </filter>
     <filter-mapping>
         <filter-name>GroupFilter</filter-name>
-        <servlet-name>GroupServlet</servlet-name>
+        <url-pattern>/Group</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
         <url-pattern>/LandingPage</url-pattern>
+        <url-pattern>/Login</url-pattern>
+        <url-pattern>/Logout</url-pattern>
+        <url-pattern>/CreateGroup</url-pattern>
+        <url-pattern>/CreateGroupServlet</url-pattern>
+        <url-pattern>/Group</url-pattern>
+        <url-pattern>/AddGroup</url-pattern>
+        <url-pattern>/AddGroupServlet</url-pattern>
+        <url-pattern>/Invitation</url-pattern>
+        <url-pattern>/InvitationServlet</url-pattern>
+        <url-pattern>/GeneratePdfServlet</url-pattern>
+        <url-pattern>/GroupList</url-pattern>
+        <url-pattern>/AddPostServlet</url-pattern>
     </filter-mapping>
     <!--CONTEXT LISTENER-->
     <listener>

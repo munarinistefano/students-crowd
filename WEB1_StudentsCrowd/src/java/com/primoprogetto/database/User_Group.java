@@ -21,7 +21,7 @@ public class User_Group {
     private String insertQuery = "INSERT INTO USERGROUP (USER_ID,GROUP_ID,ROLE) VALUES (?,?,?)";
     private String getMyGroups = "SELECT * FROM USERGROUP JOIN USERS ON USERGROUP.USER_ID = USERS.ID JOIN GROUPS ON USERGROUP.GROUP_ID = GROUPS.ID WHERE USERGROUP.USER_ID = ?";
     private String getOwnerName = "SELECT USERNAME FROM USERS JOIN GROUPS ON USERS.ID = GROUPS.OWNER_ID WHERE GROUPS.ID = ?";
-    private String isPartOfAGroup = "SELECT * FROM USERGROUP WHERE USER_ID = ? AND GROUP_ID = ?";
+    private String isPartOfAGroup = "SELECT COUNT(1) FROM USERGROUP WHERE GROUP_ID = ? AND USER_ID = ?";
     private String getMembersNames = "SELECT USERNAME, ID FROM USERS JOIN USERGROUP ON USERS.ID = USERGROUP.USER_ID WHERE USERGROUP.GROUP_ID = ?";
     
     public void setUserID(int UserID){
@@ -107,20 +107,25 @@ public class User_Group {
         return ownerName;
     }
     
-    /*public boolean isPartOfAGroup(int user_id, int group_id) throws SQLException{
+    public boolean isPartOfAGroup(int user_id, int group_id) throws SQLException{
         boolean isIt=false;
         int i=0;
-        ResultSet rs = DBManager.executeSelectQuery(isPartOfAGroup, user_id, group_id);
+        ResultSet rs = DBManager.executeSelectQuery(isPartOfAGroup, group_id, user_id);
         try {
             while (rs.next()) {
-              i++;
+              i = rs.getInt(1);
+              System.err.println("rs.getInt(1): "+rs.getInt(1));
             }
+            System.err.println("i: "+i);
         } finally {
-            if (i>0){isIt=true;}
             rs.close();
         }
+        if (i>=1){
+            System.err.println("Later i: "+i);
+            isIt=true;
+        }
         return isIt;
-    }*/
+    }
     
      public ArrayList<User> getMembersNames(int id) throws SQLException {
         ArrayList<User> users = new ArrayList();

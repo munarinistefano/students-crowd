@@ -49,6 +49,7 @@ public class Servlet_Invitation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         session = request.getSession();
         user = (User)session.getAttribute("user");
@@ -63,7 +64,6 @@ public class Servlet_Invitation extends HttpServlet {
 
             String[] paramValues = request.getParameterValues(paramName);
             for(int i=0; i < paramValues.length; i++) {
-                System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
                 if (paramValues[i].equals("accept")){
                     try {
                         invitation.changeState(user.getID(),Integer.parseInt(paramName),1);

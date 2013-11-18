@@ -28,6 +28,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano
  */
 public class GroupFilter implements Filter {
+    String url = null;
+    String queryString = null;
+    int user_id,group_id;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,47 +40,65 @@ public class GroupFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
-        
-        if (request instanceof HttpServletRequest) {
-            String url = req.getRequestURL().toString();
-            String queryString = ((HttpServletRequest)request).getQueryString();
-        }
-        
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
-        boolean isPartOfAGroup = false;
-        User_Group user_group = new User_Group();
-        int group_id = 0;
-                
-        Error error = null;
-        try {
-            group_id = Integer.parseInt(req.getParameter("id"));
-        } catch (Error e){
-            error=e;
+        
+        if (request instanceof HttpServletRequest) {
+            url = req.getRequestURL().toString();
+            queryString = ((HttpServletRequest)request).getQueryString();
         }
         
-        /*if (error==null){
-            if (group_id!=0){
-                try {
-                    isPartOfAGroup = user_group.isPartOfAGroup(user.getID(), group_id);
-                } catch (SQLException ex) {
-                    Logger.getLogger(GroupFilter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }*/
-
+        if (!queryString.substring(0, 3).equals("id=")){
+            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            //redirect to ERROR PAGE
+        }
         
-        if (error==null){
+        //System.err.println("URL: "+url+" queryString: "+queryString);
+        
+        queryString = queryString.substring(3); 
+        user_id = user.getID();
+        NumberFormatException error = null;
+        try {
+            group_id = Integer.parseInt(queryString); //get group ID
+        } catch (NumberFormatException e) {
+            error = e;
+        }
+        
+        boolean isPartOfAGroup = false;
+        User_Group user_group = new User_Group();
+        
+        if (error!=null){
+            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            //REDIRECT TO INVALID PAGE
+        } else {
+            try {
+                isPartOfAGroup = user_group.isPartOfAGroup(user_id, group_id);
+            } catch (SQLException ex) {
+                Logger.getLogger(GroupFilter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        //System.err.println("queryString[MOD]: "+queryString);
+        
+        if (isPartOfAGroup){
             chain.doFilter(request, response);
-            /*if (isPartOfAGroup){
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            //REDIRECT TO FORBIDDEN PAGE
+        }
+        
+        
+        /*if (error==null){
+            chain.doFilter(request, response);
+            if (isPartOfAGroup){
                 
             } else {
                 //PAGINA DI ACCESSO NEGATO
-            }*/
+            }
         } else {
             //PAGINA D'ERRORE
             System.err.println(error);
-        }
+        }*/
     }
 
     @Override

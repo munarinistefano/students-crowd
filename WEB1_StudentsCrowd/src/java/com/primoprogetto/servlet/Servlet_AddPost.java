@@ -36,6 +36,8 @@ public class Servlet_AddPost extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
         
         String text = request.getParameter("text");
         int group_id = Integer.parseInt(request.getParameter("group_id"));
@@ -49,7 +51,6 @@ public class Servlet_AddPost extends HttpServlet {
         java.sql.Date date = new java.sql.Date(utilDate.getTime());
         
         try {
-            System.err.println("Text:" + text +" "+ user.getID() +" "+ group_id +" "+ date);
             post.addPost(text, user.getID(), group_id ,date);
         } catch (SQLException ex) {
             Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);

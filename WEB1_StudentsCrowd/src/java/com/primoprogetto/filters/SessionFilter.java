@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Stefano
  */
 public class SessionFilter implements Filter {
+    HttpSession session = null;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -35,8 +36,13 @@ public class SessionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
         
-        HttpSession session = req.getSession(false);
+        session = req.getSession(false);
         /*if (session==null){
+            resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to login page
+        } else {
+            chain.doFilter(request, response);
+        }
+        if (session==null){
              resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
         }*/
         

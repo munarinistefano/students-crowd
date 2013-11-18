@@ -38,6 +38,7 @@ public class HTML_Group extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         int group_id = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
@@ -45,7 +46,6 @@ public class HTML_Group extends HttpServlet {
         
         Post post = new Post();
         ArrayList<Post> posts = null;
-        
         
         try {
             posts = post.getAllPosts(group_id,user.getID());
@@ -65,7 +65,6 @@ public class HTML_Group extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Group id: " + group_id + "</h1>");
             out.println("<br><br><ul>");
-            System.err.println("posts "+posts.size());
             if (posts!=null){
                 for (int i=0; i<posts.size(); i++){
                     out.println("<li>");

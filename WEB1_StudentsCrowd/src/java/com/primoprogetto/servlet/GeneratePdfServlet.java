@@ -57,6 +57,8 @@ public class GeneratePdfServlet extends HttpServlet {
         
     session = request.getSession();
     user = (User)session.getAttribute("user");
+    
+    
         
     int group_id = Integer.parseInt(request.getParameter("id"));
     int postsNumber = -1;

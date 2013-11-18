@@ -54,6 +54,7 @@ public class Servlet_Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         username = request.getParameter("username");    //get form parameters
         password = request.getParameter("password");
