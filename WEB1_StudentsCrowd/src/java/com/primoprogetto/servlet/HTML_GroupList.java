@@ -78,6 +78,7 @@ public class HTML_GroupList extends HttpServlet {
                         groupList.get(i).getName() + "</a> create by "
                         + groupList.get(i).getOwnerName() + " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");
+                out.println("<a href=GeneratePdfServlet?id=" + groupList.get(i).getID() + ">PDF</a><br /><br />");
             }
             out.println("</body>");
             out.println("</html>");

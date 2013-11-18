@@ -21,8 +21,13 @@ public class Post {
     
     private static final String PostTable = "POSTS";
     
+    private int numberOfPosts;
+    private Date dateLastPost;
+    
     private String getAllPosts = "SELECT * FROM POSTS JOIN USERGROUP ON POSTS.GROUP_ID = ? AND USERGROUP.GROUP_ID = POSTS.GROUP_ID AND USERGROUP.USER_ID = ?";
     private final String addPost = "INSERT INTO " + PostTable + " (TEXT,GROUP_ID,USER_ID,DATE) VALUES (?,?,?,?)";
+    private String getDateOfLastPostOfAUser = "SELECT DATE FROM POSTS WHERE DATE IN (SELECT MAX(DATE) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?) AND USER_ID = ? AND GROUP_ID = ?";
+    private String getNumberOfPostsOfAUser = "SELECT COUNT(*) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?";
     
     public void setID(int ID){
         this.ID=ID;
@@ -94,5 +99,37 @@ public class Post {
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
         }
+    }
+    
+    public void setNumberOfPostsOfAUser(int userID, int groupID) throws SQLException{
+        ResultSet rs = DBManager.executeSelectQuery(getNumberOfPostsOfAUser, userID, groupID);
+        try {
+          while (rs.next()) {
+            this.numberOfPosts = rs.getInt(1);
+            System.err.println(numberOfPosts);
+          }
+        } finally {
+          rs.close();
+        }
+    }
+    
+    public int getNumberOfPostsOfAUser(){
+        return this.numberOfPosts;
+    }
+  
+    public void setDateOfLastPostOfAUser(int userID, int groupID, int user, int group) throws SQLException{
+        ResultSet rs = DBManager.executeSelectQuery(getDateOfLastPostOfAUser, userID, groupID, user, group);
+        try {
+            while (rs.next()) {
+                this.dateLastPost = rs.getDate(1);
+                System.err.println("dataaaaaaaaaaaaaaaaaa" + dateLastPost);
+            }
+        } finally {
+            rs.close();
+        }
+    }
+    
+    public Date getDateOfLastPostOfAUser(){
+        return this.dateLastPost;
     }
 }

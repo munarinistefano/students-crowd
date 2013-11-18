@@ -22,6 +22,7 @@ public class User_Group {
     private String getMyGroups = "SELECT * FROM USERGROUP JOIN USERS ON USERGROUP.USER_ID = USERS.ID JOIN GROUPS ON USERGROUP.GROUP_ID = GROUPS.ID WHERE USERGROUP.USER_ID = ?";
     private String getOwnerName = "SELECT USERNAME FROM USERS JOIN GROUPS ON USERS.ID = GROUPS.OWNER_ID WHERE GROUPS.ID = ?";
     private String isPartOfAGroup = "SELECT * FROM USERGROUP WHERE USER_ID = ? AND GROUP_ID = ?";
+    private String getMembersNames = "SELECT USERNAME, ID FROM USERS JOIN USERGROUP ON USERS.ID = USERGROUP.USER_ID WHERE USERGROUP.GROUP_ID = ?";
     
     public void setUserID(int UserID){
         this.UserID=UserID;
@@ -120,4 +121,20 @@ public class User_Group {
         }
         return isIt;
     }*/
+    
+     public ArrayList<User> getMembersNames(int id) throws SQLException {
+        ArrayList<User> users = new ArrayList();
+        ResultSet rs = DBManager.executeSelectQuery(getMembersNames, id);
+        try {
+            while (rs.next()) {
+                User user = new User();
+                user.setUsername(rs.getString(1));
+                user.setId(rs.getInt(2));
+                users.add(user);
+            }
+        } finally {
+            rs.close();
+        }
+        return users;
+    }
 }

@@ -163,4 +163,18 @@ public class DBManager implements Serializable{
       return con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
     }
     
+     /*
+     * Method to call from other classes to execute SELECT queries with 2 parameter 
+     */
+    public static ResultSet executeSelectQuery(String query, int group_id, int user_id,
+            int group, int user) throws SQLException {
+        PreparedStatement stm = con.prepareStatement(query);
+        stm.setInt(1, group_id);
+        stm.setInt(2, user_id);
+        stm.setInt(3, group);
+        stm.setInt(4, user);
+        ResultSet rs = stm.executeQuery();
+        return rs;
+    }
+    
 }
