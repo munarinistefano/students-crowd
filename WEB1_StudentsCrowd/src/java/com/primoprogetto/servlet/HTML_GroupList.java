@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alan
  */
-public class GroupListServlet extends HttpServlet {
+public class HTML_GroupList extends HttpServlet {
   DBManager manager;
     HttpSession session;
     User user;
@@ -74,7 +74,7 @@ public class GroupListServlet extends HttpServlet {
             for (int i=0; i<groupList.size(); i++){
                 //System.err.println(groupList.get(i).getName());
                 //System.err.println(groupList.get(i).getOwnerName());
-                out.println(i+1 + ". <a href=GroupServlet?id=" + groupList.get(i).getID() + ">" + 
+                out.println(i+1 + ". <a href=Group?id=" + groupList.get(i).getID() + ">" + 
                         groupList.get(i).getName() + "</a> create by "
                         + groupList.get(i).getOwnerName() + " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");

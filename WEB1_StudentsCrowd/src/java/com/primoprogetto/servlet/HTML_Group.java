@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class GroupServlet extends HttpServlet {
+public class HTML_Group extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -50,7 +50,7 @@ public class GroupServlet extends HttpServlet {
         try {
             posts = post.getAllPosts(group_id,user.getID());
         } catch (SQLException ex) {
-            Logger.getLogger(GroupServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HTML_Group.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

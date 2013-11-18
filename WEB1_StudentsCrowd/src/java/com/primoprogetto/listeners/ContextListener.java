@@ -14,7 +14,7 @@ import javax.servlet.ServletContextListener;
  *
  * @author Stefano
  */
-public class WebappContextListener implements ServletContextListener{
+public class ContextListener implements ServletContextListener{
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class LogoutServlet extends HttpServlet {
+public class Servlet_Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -36,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession sessions = request.getSession();  //get an instance of the current session
         sessions.invalidate();                        //invalidate session
         
-        response.sendRedirect(request.getContextPath() + "/Login"); //redirect to landing page
+        response.sendRedirect(request.getContextPath() + "/index.jsp"); //redirect to landing page
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,48 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <!--SERVLET-->
     <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.LogoutServlet</servlet-class>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Servlet_Logout</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.LoginServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Servlet_Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LandingPage</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.LandingPageServlet</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.HTML_LandingPage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Invitation</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.InvitationServlet</servlet-class>
+        <servlet-name>InvitationServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Servlet_Invitation</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateGroup</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.CreateGroupServlet</servlet-class>
+        <servlet-name>CreateGroupServlet</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.Servlet_CreateGroup</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GroupList</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.GroupListServlet</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.HTML_GroupList</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddPostServlet</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.AddPostServlet</servlet-class>
+        <servlet-class>com.primoprogetto.servlet.Servlet_AddPost</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GroupServlet</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.GroupServlet</servlet-class>
+        <servlet-name>Group</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.HTML_Group</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Invitation</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.HTML_Invitation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateGroup</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.HTML_CreateGroup</servlet-class>
+    </servlet>
+    <!--SERVLET MAPPING -->
     <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/Logout</url-pattern>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/Login</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InvitationServlet</servlet-name>
+        <url-pattern>/InvitationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupServlet</servlet-name>
+        <url-pattern>/CreateGroupServlet</url-pattern>
+    </servlet-mapping>
+    <!--SERVLET MAPPING (ONLY HTML SERVLETS) -->
     <servlet-mapping>
         <servlet-name>LandingPage</servlet-name>
         <url-pattern>/LandingPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupList</servlet-name>
+        <url-pattern>/GroupList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPostServlet</servlet-name>
+        <url-pattern>/AddPostServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Group</servlet-name>
+        <url-pattern>/Group</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Invitation</servlet-name>
@@ -52,7 +83,7 @@
         <servlet-name>CreateGroup</servlet-name>
         <url-pattern>/CreateGroup</url-pattern>
     </servlet-mapping>
-    <!--CONTEXT LISTENER-->
+    <!--FILTERS-->
     <filter>
         <filter-name>SessionFilter</filter-name>
         <filter-class>com.primoprogetto.filters.SessionFilter</filter-class>
@@ -69,27 +100,16 @@
         <filter-name>SessionFilter</filter-name>
         <url-pattern>/LandingPage</url-pattern>
     </filter-mapping>
+    <!--CONTEXT LISTENER-->
     <listener>
         <description>listener</description>
-        <listener-class>com.primoprogetto.listeners.WebappContextListener</listener-class>
+        <listener-class>com.primoprogetto.listeners.ContextListener</listener-class>
     </listener>
-    <!-- URL DATABASE -->
+    <!-- DATABASE URL-->
     <context-param>
         <param-name>dburl</param-name>
         <param-value>jdbc:derby://localhost:1527/PrimoProgetto</param-value>
     </context-param>
-    <servlet-mapping>
-        <servlet-name>GroupList</servlet-name>
-        <url-pattern>/GroupList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddPostServlet</servlet-name>
-        <url-pattern>/AddPostServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GroupServlet</servlet-name>
-        <url-pattern>/GroupServlet</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

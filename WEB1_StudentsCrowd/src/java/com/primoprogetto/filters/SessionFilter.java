@@ -35,9 +35,13 @@ public class SessionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
         
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
+        /*if (session==null){
+             resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
+        }*/
+        
         if ((User)session.getAttribute("user")==null){
-            resp.sendRedirect(req.getContextPath()+"/Login"); //redirect to landing page
+            resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
         } else {
             chain.doFilter(request, response);
         }

@@ -38,6 +38,11 @@ public class GroupFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
         
+        if (request instanceof HttpServletRequest) {
+            String url = req.getRequestURL().toString();
+            String queryString = ((HttpServletRequest)request).getQueryString();
+        }
+        
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
         boolean isPartOfAGroup = false;

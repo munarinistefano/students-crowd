@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class LandingPageServlet extends HttpServlet {
+public class HTML_LandingPage extends HttpServlet {
     private User user;
     private HttpSession session;
     Cookie[] cookies;
@@ -67,7 +67,7 @@ public class LandingPageServlet extends HttpServlet {
             out.println("       <div id=\"title\">");
             out.println("         <h1>Students Crowd</h1>");
             out.println("       <div id=\"userbar\">");
-            out.println("         <h1>" + user.getUsername() + " (<a href=\"Logout\">logout</a>)</h1>");
+            out.println("         <h1>" + user.getUsername() + " (<a href=\"LogoutServlet\">logout</a>)</h1>");
             // out.println("       </div>");
             out.println("     </header>");
             out.println("   </div>");

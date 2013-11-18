@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class AddPostServlet extends HttpServlet {
+public class Servlet_AddPost extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -52,10 +52,10 @@ public class AddPostServlet extends HttpServlet {
             System.err.println("Text:" + text +" "+ user.getID() +" "+ group_id +" "+ date);
             post.addPost(text, user.getID(), group_id ,date);
         } catch (SQLException ex) {
-            Logger.getLogger(AddPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        response.sendRedirect(request.getContextPath() + "/GroupServlet?id="+group_id); //redirect to landing page
+        response.sendRedirect(request.getContextPath() + "/Group?id="+group_id); //redirect to landing page
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class CreateGroupServlet extends HttpServlet {
+public class Servlet_CreateGroup extends HttpServlet {
     DBManager manager;
     HttpSession session;
     User user;
@@ -54,43 +54,44 @@ public class CreateGroupServlet extends HttpServlet {
         session = request.getSession();
         user = (User)session.getAttribute("user");
         
-        ArrayList<User> userList = new ArrayList();
-        try {
-            userList = manager.getAllUser();
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Enumeration paramNames = request.getParameterNames();
         
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateGroup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<form name=\"input\" action=\"CreateGroup\" method=\"POST\">\n");
-            out.println("GroupName: <input type=\"text\" name=\"groupname\">");
-            out.println("<br> Owner: " + user.getUsername() + "<br>");
-            out.println("<ul>");
+        int group_id = 0;
+        while(paramNames.hasMoreElements()) {
+            String paramName = (String)paramNames.nextElement();  //get single parameter
+
+            Group group = new Group();
+            Invitation invitation = new Invitation();
+            User_Group user_group = new User_Group();
             
-            for (int i=0; i<userList.size(); i++){
-                if (userList.get(i).getID() == user.getID()) {
-                  out.println("&nbsp;");
-                } else {
-                  out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
+            java.sql.Date date;
+            // Get the system date and time.
+            java.util.Date utilDate = new java.util.Date();
+            // Convert it to java.sql.Date
+            date = new java.sql.Date(utilDate.getTime());     //set creation date
+
+            String[] paramValues = request.getParameterValues(paramName);
+            for(int i=0; i < paramValues.length; i++) {
+                if (paramName.equals("groupname")){                 //get group name
+                    try {
+                        group_id = group.addGroup(paramValues[i], user.getID(), date);
+                        invitation.addInvitation(user.getID(), group_id,1);
+                        user_group.add(user.getID(),group_id,1);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servlet_CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {                                            //get selected checkboxes
+                    if (group_id!=0){
+                        try {                               
+                            invitation.addInvitation(Integer.parseInt(paramName), group_id);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Servlet_CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 }
             }
-            
-            out.println("</ul>");
-            out.println("<input type=\"submit\" value=\"Submit\">\n");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
         }
+        response.sendRedirect(request.getContextPath() + "/GroupList"); //redirect to group list page
     }
     
 
@@ -121,47 +122,7 @@ public class CreateGroupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-
-        Enumeration paramNames = request.getParameterNames();
-        
-        int group_id = 0;
-        while(paramNames.hasMoreElements()) {
-            String paramName = (String)paramNames.nextElement();  //get single parameter
-
-            Group group = new Group();
-            Invitation invitation = new Invitation();
-            User_Group user_group = new User_Group();
-
-            java.sql.Date date;
-            // Get the system date and time.
-            java.util.Date utilDate = new java.util.Date();
-            // Convert it to java.sql.Date
-            date = new java.sql.Date(utilDate.getTime());     //set creation date
-
-            
-            String[] paramValues = request.getParameterValues(paramName);
-            for(int i=0; i < paramValues.length; i++) {
-                if (paramName.equals("groupname")){                 //get group name
-                    try {
-                        group_id = group.addGroup(paramValues[i], user.getID(), date);
-                        invitation.addInvitation(user.getID(), group_id,1);
-                        user_group.add(user.getID(),group_id,1);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {                                            //get selected checkboxes
-                    if (group_id!=0){
-                        try {                               
-                            invitation.addInvitation(Integer.parseInt(paramName), group_id);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(CreateGroupServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }
-        }
-        response.sendRedirect(request.getContextPath() + "/GroupList"); //redirect to group list page
+        processRequest(request, response);
     }
 
     /**

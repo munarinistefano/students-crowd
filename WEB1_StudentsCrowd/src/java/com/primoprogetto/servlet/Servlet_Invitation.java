@@ -5,17 +5,18 @@
 package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
+import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
+import com.primoprogetto.database.Invitation;
+import com.primoprogetto.database.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,22 +26,16 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class LoginServlet extends HttpServlet {
-
-    private DBManager manager;
-    private String username,password;
-    private User user = null;
-    HttpSession session;
-    Cookie[] cookies;
-    Cookie cookie;
-    String lastLogin;
+public class Servlet_Invitation extends HttpServlet {
+    private HttpSession session;
+    private User user;
+    DBManager manager;
     
     @Override
     public void init() throws ServletException {
         // inizializza il DBManager dagli attributi di Application
         this.manager = (DBManager)super.getServletContext().getAttribute("dbmanager");
     }
-    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -55,46 +50,37 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        username = request.getParameter("username");    //get form parameters
-        password = request.getParameter("password");
-        session = request.getSession();                 //get an instance of the current session
+        session = request.getSession();
+        user = (User)session.getAttribute("user");
         
-        try { 
-            user = manager.authenticate(username, password);   //try to autentichate user with username & password
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        }
+        Enumeration paramNames = request.getParameterNames();
         
-        if (user==null){                                       //if user does not exists, redirect to login page
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        } else {
-            
-            session.setAttribute("user", user);                //set session attribute
-            
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar cal = Calendar.getInstance();
-            
-            cookie = null;
-            cookies = null;
-            cookies = request.getCookies();
-            
-            for (int i = 0; i < cookies.length; i++){
-                cookie = cookies[i];
-                if(cookie.getName().equals("lastLogin") )
-                    lastLogin = cookie.getValue();
+        while(paramNames.hasMoreElements()) {
+            String paramName = (String)paramNames.nextElement();
+
+            User_Group user_group = new User_Group();
+            Invitation invitation = new Invitation();
+
+            String[] paramValues = request.getParameterValues(paramName);
+            for(int i=0; i < paramValues.length; i++) {
+                System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
+                if (paramValues[i].equals("accept")){
+                    try {
+                        invitation.changeState(user.getID(),Integer.parseInt(paramName),1);
+                        user_group.add(user.getID(),Integer.parseInt(paramName),0);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servlet_Invitation.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (paramValues[i].equals("refuse")){
+                    try {
+                        invitation.changeState(user.getID(),Integer.parseInt(paramName),2);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servlet_Invitation.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
-            
-            Cookie previousLoginCookie = new Cookie("previousLogin",lastLogin);
-            previousLoginCookie.setMaxAge(60*60*24*360);
-            response.addCookie(previousLoginCookie);
-            
-            Cookie lastLoginCookie = new Cookie("lastLogin",dateFormat.format(cal.getTime()));
-            lastLoginCookie.setMaxAge(60*60*24*360);
-            response.addCookie(lastLoginCookie);
-            
-            response.sendRedirect(request.getContextPath() + "/LandingPage"); //redirect to landing page
-            
         }
+        response.sendRedirect(request.getContextPath() + "/Invitation"); //redirect to landing page
     }
 
     /**

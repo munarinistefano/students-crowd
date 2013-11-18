@@ -5,15 +5,12 @@
 package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
-import com.primoprogetto.database.Group;
-import com.primoprogetto.database.User;
 import com.primoprogetto.database.Invitation;
-import com.primoprogetto.database.User_Group;
+import com.primoprogetto.database.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -26,7 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class InvitationServlet extends HttpServlet {
+public class HTML_Invitation extends HttpServlet {
+
     private HttpSession session;
     private User user;
     DBManager manager;
@@ -51,7 +49,6 @@ public class InvitationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         session = request.getSession();
-        
         user = (User)session.getAttribute("user");
         
         ArrayList<Invitation> invitations = new ArrayList();
@@ -59,7 +56,7 @@ public class InvitationServlet extends HttpServlet {
             Invitation invitation = new Invitation();
             invitations = invitation.getInvitation(user.getID());
         } catch (SQLException ex) {
-            Logger.getLogger(InvitationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Servlet_Invitation.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         PrintWriter out = response.getWriter();
@@ -74,12 +71,12 @@ public class InvitationServlet extends HttpServlet {
             out.println("<ul>");
             for (int i=0; i<invitations.size(); i++){
                 if (invitations.get(i).getState()==0){
-                    out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"    PENDING");
-                    out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\"> <input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"accept\">");
+                    out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" <a href=\"GroupServlet?id=" + invitations.get(i).getGroupID() + "\"> GroupName: "+invitations.get(i).getGroupName()+" </a> Owner:"+invitations.get(i).getOwner()+"    PENDING");
+                    out.println("<form name=\"input\" action=\"InvitationServlet\" method=\"POST\"> <input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"accept\">");
                     out.println("<input name=\""+invitations.get(i).getGroupID()+"\" type=\"submit\" value=\"refuse\">");
                     out.println("</li>");
                 } else if (invitations.get(i).getState()==1){
-                    out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"   <p> ACCEPTED </p></li>");
+                    out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" <a href=\"Group?id=" + invitations.get(i).getGroupID() + "\"> GroupName: "+invitations.get(i).getGroupName()+" </a> Owner:"+invitations.get(i).getOwner()+"   <p> ACCEPTED </p></li>");
                 }else if (invitations.get(i).getState()==2){
                     out.println("<li> GroupID: "+invitations.get(i).getGroupID()+" GroupName: "+invitations.get(i).getGroupName()+" Owner:"+invitations.get(i).getOwner()+"   <p> REFUSED </p></li>");
                 }
@@ -94,6 +91,7 @@ public class InvitationServlet extends HttpServlet {
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -121,35 +119,7 @@ public class InvitationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Enumeration paramNames = request.getParameterNames();
-        
-        while(paramNames.hasMoreElements()) {
-            String paramName = (String)paramNames.nextElement();
-
-            User_Group user_group = new User_Group();
-            Invitation invitation = new Invitation();
-
-            String[] paramValues = request.getParameterValues(paramName);
-            for(int i=0; i < paramValues.length; i++) {
-                System.out.println("paramName: " + paramName + " paramValue: " + paramValues[i]);
-                if (paramValues[i].equals("accept")){
-                    try {
-                        invitation.changeState(user.getID(),Integer.parseInt(paramName),1);
-                        user_group.add(user.getID(),Integer.parseInt(paramName),0);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(InvitationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else if (paramValues[i].equals("refuse")){
-                    try {
-                        invitation.changeState(user.getID(),Integer.parseInt(paramName),2);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(InvitationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-        response.sendRedirect(request.getContextPath() + "/Invitation"); //redirect to landing page
+        processRequest(request, response);
     }
 
     /**
