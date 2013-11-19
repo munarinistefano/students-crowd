@@ -5,10 +5,6 @@
 package com.primoprogetto.database;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -19,15 +15,7 @@ public class Post {
     private Date date;
     private String text;
     
-    private static final String PostTable = "POSTS";
     
-    private int numberOfPosts;
-    private Date dateLastPost;
-    
-    private String getAllPosts = "SELECT * FROM POSTS JOIN USERGROUP ON POSTS.GROUP_ID = ? AND USERGROUP.GROUP_ID = POSTS.GROUP_ID AND USERGROUP.USER_ID = ?";
-    private final String addPost = "INSERT INTO " + PostTable + " (TEXT,GROUP_ID,USER_ID,DATE) VALUES (?,?,?,?)";
-    private String getDateOfLastPostOfAUser = "SELECT DATE FROM POSTS WHERE DATE IN (SELECT MAX(DATE) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?) AND USER_ID = ? AND GROUP_ID = ?";
-    private String getNumberOfPostsOfAUser = "SELECT COUNT(*) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?";
     
     public void setID(int ID){
         this.ID=ID;
@@ -67,69 +55,5 @@ public class Post {
     
     public Date getDate(){
         return this.date;
-    }
-    
-    public ArrayList<Post> getAllPosts(int group_id, int user_id) throws SQLException{
-        ArrayList<Post> posts = new ArrayList();
-        ResultSet rs = DBManager.executeSelectQuery(getAllPosts,group_id,user_id);
-        try {
-            while (rs.next()) {
-                Post post = new Post();
-                post.setID(rs.getInt(1));
-                post.setText(rs.getString(2));
-                post.setGroupID(rs.getInt(3));
-                post.setUserID(rs.getInt(4));
-                post.setDate(rs.getDate(5));
-                posts.add(post);
-            }
-        } finally {
-            rs.close();
-        }
-        return posts;
-    }
-    
-    public void addPost(String text, int user_id, int group_id, Date date) throws SQLException{
-        PreparedStatement stm = DBManager.executeInsertQuery(addPost);
-        try {
-            stm.setString(1, text);
-            stm.setInt(2, group_id);
-            stm.setInt(3, user_id);
-            stm.setDate(4, date);
-            stm.executeUpdate();
-        } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
-            stm.close();
-        }
-    }
-    
-    public void setNumberOfPostsOfAUser(int userID, int groupID) throws SQLException{
-        ResultSet rs = DBManager.executeSelectQuery(getNumberOfPostsOfAUser, userID, groupID);
-        try {
-          while (rs.next()) {
-            this.numberOfPosts = rs.getInt(1);
-            System.err.println(numberOfPosts);
-          }
-        } finally {
-          rs.close();
-        }
-    }
-    
-    public int getNumberOfPostsOfAUser(){
-        return this.numberOfPosts;
-    }
-  
-    public void setDateOfLastPostOfAUser(int userID, int groupID, int user, int group) throws SQLException{
-        ResultSet rs = DBManager.executeSelectQuery(getDateOfLastPostOfAUser, userID, groupID, user, group);
-        try {
-            while (rs.next()) {
-                this.dateLastPost = rs.getDate(1);
-                System.err.println("dataaaaaaaaaaaaaaaaaa" + dateLastPost);
-            }
-        } finally {
-            rs.close();
-        }
-    }
-    
-    public Date getDateOfLastPostOfAUser(){
-        return this.dateLastPost;
     }
 }

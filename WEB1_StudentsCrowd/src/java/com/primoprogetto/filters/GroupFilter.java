@@ -5,11 +5,8 @@
 package com.primoprogetto.filters;
 
 import com.primoprogetto.database.User;
-import com.primoprogetto.database.User_Group;
+import com.primoprogetto.database.interaction.User_Group;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,10 +50,9 @@ public class GroupFilter implements Filter {
             //redirect to ERROR PAGE
         }
         
-        //System.err.println("URL: "+url+" queryString: "+queryString);
-        
         queryString = queryString.substring(3); 
         user_id = user.getID();
+        
         NumberFormatException error = null;
         try {
             group_id = Integer.parseInt(queryString); //get group ID
@@ -65,20 +61,17 @@ public class GroupFilter implements Filter {
         }
         
         boolean isPartOfAGroup = false;
-        User_Group user_group = new User_Group();
-        
         if (error!=null){
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
         } else {
             try {
-                isPartOfAGroup = user_group.isPartOfAGroup(user_id, group_id);
+                isPartOfAGroup = User_Group.isPartOfAGroup(user_id, group_id);
             } catch (SQLException ex) {
                 Logger.getLogger(GroupFilter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
-        //System.err.println("queryString[MOD]: "+queryString);
         
         if (isPartOfAGroup){
             chain.doFilter(request, response);
@@ -86,19 +79,6 @@ public class GroupFilter implements Filter {
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO FORBIDDEN PAGE
         }
-        
-        
-        /*if (error==null){
-            chain.doFilter(request, response);
-            if (isPartOfAGroup){
-                
-            } else {
-                //PAGINA DI ACCESSO NEGATO
-            }
-        } else {
-            //PAGINA D'ERRORE
-            System.err.println(error);
-        }*/
     }
 
     @Override

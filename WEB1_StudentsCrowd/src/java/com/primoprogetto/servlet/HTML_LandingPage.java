@@ -7,7 +7,6 @@ package com.primoprogetto.servlet;
 import com.primoprogetto.database.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;

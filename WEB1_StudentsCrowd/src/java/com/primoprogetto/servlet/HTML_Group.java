@@ -6,7 +6,6 @@ package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.Post;
 import com.primoprogetto.database.User;
-import com.primoprogetto.database.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -44,11 +43,10 @@ public class HTML_Group extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         
-        Post post = new Post();
         ArrayList<Post> posts = null;
         
         try {
-            posts = post.getAllPosts(group_id,user.getID());
+            posts = com.primoprogetto.database.interaction.Post.getAllPosts(group_id,user.getID());
         } catch (SQLException ex) {
             Logger.getLogger(HTML_Group.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,8 +75,9 @@ public class HTML_Group extends HttpServlet {
                 }
             }
             out.println("</ul>");
-            out.println("<form name=\"input\" action=\"AddPostServlet?group_id="+group_id+"\" method=\"POST\">\n");
-            out.println("Text: <input type=\"text\" name=\"text\">");
+            out.println("<form name=\"input\" action=\"AddPostServlet?group_id="+group_id+"\" method=\"POST\" enctype='multipart/form-data'>");
+            out.println("Text: <input type=\"text\" name=\"text\"> <br>");
+            out.println("File: <input type=\"file\" name=\"file1\"> <br/>");
             out.println("<input type=\"submit\" value=\"Submit\">\n");
             out.println("</body>");
             out.println("</html>");

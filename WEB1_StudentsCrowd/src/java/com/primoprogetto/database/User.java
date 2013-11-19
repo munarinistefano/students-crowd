@@ -4,8 +4,6 @@
  */
 package com.primoprogetto.database;
 
-import java.sql.Date;
-
 /**
  *
  * @author Stefano

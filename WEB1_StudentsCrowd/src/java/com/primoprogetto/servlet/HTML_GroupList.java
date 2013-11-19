@@ -6,9 +6,8 @@ package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
 import com.primoprogetto.database.Group;
-import com.primoprogetto.database.Invitation;
 import com.primoprogetto.database.User;
-import com.primoprogetto.database.User_Group;
+import com.primoprogetto.database.interaction.User_Group;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -54,10 +53,9 @@ public class HTML_GroupList extends HttpServlet {
         session = request.getSession();
         user = (User)session.getAttribute("user");
         
-        User_Group userGroup = new User_Group();
         ArrayList <Group> groupList = new ArrayList();
         try {
-            groupList = userGroup.getMyGroups(user.getID());
+            groupList = User_Group.getMyGroups(user.getID());
         } catch (SQLException ex) {
             Logger.getLogger(Group.class.getName()).log(Level.SEVERE, null, ex);
         }

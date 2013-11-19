@@ -55,7 +55,7 @@ public class HTML_Invitation extends HttpServlet {
         ArrayList<Invitation> invitations = new ArrayList();
         try {
             Invitation invitation = new Invitation();
-            invitations = invitation.getInvitation(user.getID());
+            invitations = com.primoprogetto.database.interaction.Invitation.getInvitation(user.getID());
         } catch (SQLException ex) {
             Logger.getLogger(Servlet_Invitation.class.getName()).log(Level.SEVERE, null, ex);
         }

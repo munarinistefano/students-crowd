@@ -5,14 +5,12 @@
 package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.DBManager;
-import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
-import com.primoprogetto.database.Invitation;
-import com.primoprogetto.database.User_Group;
+import com.primoprogetto.database.interaction.Group;
+import com.primoprogetto.database.interaction.Invitation;
+import com.primoprogetto.database.interaction.User_Group;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,10 +58,6 @@ public class Servlet_CreateGroup extends HttpServlet {
         int group_id = 0;
         while(paramNames.hasMoreElements()) {
             String paramName = (String)paramNames.nextElement();  //get single parameter
-
-            Group group = new Group();
-            Invitation invitation = new Invitation();
-            User_Group user_group = new User_Group();
             
             java.sql.Date date;
             // Get the system date and time.
@@ -75,16 +69,16 @@ public class Servlet_CreateGroup extends HttpServlet {
             for(int i=0; i < paramValues.length; i++) {
                 if (paramName.equals("groupname")){                 //get group name
                     try {
-                        group_id = group.addGroup(paramValues[i], user.getID(), date);
-                        invitation.addInvitation(user.getID(), group_id,1);
-                        user_group.add(user.getID(),group_id,1);
+                        group_id = Group.addGroup(paramValues[i], user.getID(), date);
+                        Invitation.addInvitation(user.getID(), group_id,1);
+                        User_Group.add(user.getID(),group_id,1);
                     } catch (SQLException ex) {
                         Logger.getLogger(Servlet_CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {                                            //get selected checkboxes
                     if (group_id!=0){
                         try {                               
-                            invitation.addInvitation(Integer.parseInt(paramName), group_id);
+                            Invitation.addInvitation(Integer.parseInt(paramName), group_id);
                         } catch (SQLException ex) {
                             Logger.getLogger(Servlet_CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
                         }
