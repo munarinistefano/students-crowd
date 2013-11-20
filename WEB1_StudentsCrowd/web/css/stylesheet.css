@@ -99,9 +99,10 @@ body {
 }
 
 #wrapper h1 {
-	font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
-	font-size: 48px;
-	font-weight: bold;
+	font-family: 'Raleway', sans-serif;
+	font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -1px;
 	text-align: center;
 	color: #12557F;
 	padding: 2px 0 10px 0;
@@ -228,29 +229,6 @@ input {
 
 
 /********************************************************************************
- * STILE DELLA CHECKBOX "KEEP ME LOGGED IN"
- ********************************************************************************/
-
-.keeplogin {
-	margin-top: -5px;
-}
-
-.keeplogin input, .keeplogin label {
-	font-size: 12px;
-	font-style: italic;
-	display: inline-block;
-}
-
-.keeplogin input#loginkeeping {
-	margin-right: 5px;
-}
-
-.keeplogin label {
-	width: 80%;
-}
-
-
-/********************************************************************************
  * STILE DEL BOTTONE "LOGIN"
  ********************************************************************************/
 
@@ -300,7 +278,7 @@ input {
 
 p.login.button {
 	text-align: right;
-	margin: 5px 0;
+	margin: 25px 0;
 }
 
 
