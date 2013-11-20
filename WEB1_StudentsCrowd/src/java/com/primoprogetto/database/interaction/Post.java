@@ -25,7 +25,8 @@ public class Post {
     private static int numberOfPosts;
     private static Date dateLastPost;
     
-    private final static  String getAllPosts = "SELECT * FROM POSTS JOIN USERGROUP ON POSTS.GROUP_ID = ? AND USERGROUP.GROUP_ID = POSTS.GROUP_ID AND USERGROUP.USER_ID = ?";
+    private final static  String getAllPosts = "SELECT * FROM POSTS JOIN USERGROUP ON POSTS.GROUP_ID = ? AND USERGROUP.GROUP_ID = POSTS.GROUP_ID AND USERGROUP.USER_ID = ? LEFT JOIN POSTFILE ON POSTFILE.POST_ID = POSTS.ID";
+    
     private final static  String addPost = "INSERT INTO " + PostTable + " (TEXT,GROUP_ID,USER_ID,DATE) VALUES (?,?,?,?)";
     private final static  String getDateOfLastPostOfAUser = "SELECT DATE FROM POSTS WHERE DATE IN (SELECT MAX(DATE) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?) AND USER_ID = ? AND GROUP_ID = ?";
     private final static  String getNumberOfPostsOfAUser = "SELECT COUNT(*) FROM POSTS WHERE USER_ID = ? AND GROUP_ID = ?";
@@ -41,6 +42,7 @@ public class Post {
                 post.setGroupID(rs.getInt(3));
                 post.setUserID(rs.getInt(4));
                 post.setDate(rs.getDate(5));
+                post.setFile(rs.getString(10));
                 posts.add(post);
             }
         } finally {

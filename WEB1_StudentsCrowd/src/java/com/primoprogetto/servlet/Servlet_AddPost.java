@@ -36,10 +36,10 @@ public class Servlet_AddPost extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         // read the uploadDir from the servlet parameters
-        dirName = config.getInitParameter("uploadDirectory");
+        /*dirName = config.getInitParameter("uploadDirectory");
         if (dirName == null) {
             throw new ServletException("Please supply uploadDir parameter");
-        }
+        }*/
     }
     /**
      * Processes requests for both HTTP
@@ -59,7 +59,6 @@ public class Servlet_AddPost extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/Group?id="+group_id); //redirect to landing page
     }
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -99,6 +98,13 @@ public class Servlet_AddPost extends HttpServlet {
         
         fileName = multi.getFilesystemName("file1");
         
+        dirName = request.getServletContext().getRealPath("Resources/File/" + group_id + "/");
+        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+        File file = new File(dirName);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        
         // Get the system date and time.
         java.util.Date utilDate = new java.util.Date();
         // Convert it to java.sql.Date
@@ -110,8 +116,7 @@ public class Servlet_AddPost extends HttpServlet {
             Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if (uploadFile(f)){
-            fileName = user.getID() + "_" + group_id + "_" + fileName;       //FILENAME = 'USERID'_'GROUPID'_FILENAME
+        if (uploadFile(f,user)){
             try {
                 PostFile.addPostFile(fileName, postID);
             } catch (SQLException ex) {
@@ -122,21 +127,10 @@ public class Servlet_AddPost extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-    private boolean uploadFile(File f) throws FileNotFoundException, IOException {
+    private boolean uploadFile(File f, User user) throws FileNotFoundException, IOException {
         if (f!=null) { 
+            fileName = user.getID() + "_" +fileName;       //FILENAME = 'GROUPID'_'USERID'_FILENAME
             File fOUT = new File(dirName,fileName);
-            System.err.println(fOUT.getParentFile().getAbsolutePath());
-            //File fOUT = new File(bau,fileName) ;
             FileInputStream fIS = new FileInputStream(f); 
             FileOutputStream fOS = new FileOutputStream(fOUT); 
             while (fIS.available()>0) {

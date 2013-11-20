@@ -14,6 +14,7 @@ public class Post {
     private int ID,GroupID,UserID;
     private Date date;
     private String text;
+    private String file = null;
     
     
     
@@ -55,5 +56,19 @@ public class Post {
     
     public Date getDate(){
         return this.date;
+    }
+
+    /**
+     * @return the file
+     */
+    public String getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(String file) {
+        this.file = file;
     }
 }
