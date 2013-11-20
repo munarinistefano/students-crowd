@@ -135,22 +135,14 @@ public class HTML_Group extends HttpServlet {
     private String formatText(String text, int group_id, HttpServletRequest request) {
         String delims = "[$$]+";
         int start = text.indexOf("$$");
-        int nextstart = text.indexOf("$$", start+1);
+        int end = text.indexOf("$$", start+1);
         
         String file=null;
-        if (start!=-1 && nextstart!=-1){
+        if (start!=-1 && end!=-1){
             String path = "Resources/File/" + group_id;
-            return text.substring(0, start) + "<a href=\"" + path + "/" + text.substring(start+2, nextstart) + "\" target='blank'>" + text.substring(start+2, nextstart) + " </a>";
+            return text.substring(0, start) + "<a href=\"" + path + "/" + text.substring(start+2, end) + "\" target='blank'>" + text.substring(start+2,end) + " </a> " + text.substring(end+2);
         } else {
             return text;
         }
-        
-        //System.err.print(file);
-        /*System.err.print(start+" "+nextstart);
-        String[] tokens = text.split(delims);
-        for (int i=0; i<tokens.length; i++){
-            System.err.print(tokens[i]+" ");
-        }*/
-        //return null;
     }
 }
