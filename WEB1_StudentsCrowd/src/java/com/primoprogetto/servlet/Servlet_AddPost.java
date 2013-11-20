@@ -98,11 +98,25 @@ public class Servlet_AddPost extends HttpServlet {
         
         fileName = multi.getFilesystemName("file1");
         
-        dirName = request.getServletContext().getRealPath("Resources/File/" + group_id + "/");
+        dirName = request.getServletContext().getRealPath("Resources/");
         //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
         File file = new File(dirName);
         if (!file.exists()){
             file.mkdir();
+        }
+        
+        dirName = request.getServletContext().getRealPath("Resources/File/");
+        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+        File file2 = new File(dirName);
+        if (!file2.exists()){
+            file2.mkdir();
+        }
+        
+        dirName = request.getServletContext().getRealPath("Resources/File/" + group_id + "/");
+        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+        File file3 = new File(dirName);
+        if (!file3.exists()){
+            file3.mkdir();
         }
         
         // Get the system date and time.
