@@ -12,7 +12,8 @@
         <meta charset="utf-8" />
         <title>STUDENTS CROWD</title>
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
-        <link href='http://fonts.googleapis.com/css?family=Lato:700' rel='stylesheet' type='text/css'>
+        <!--<link href='http://fonts.googleapis.com/css?family=Lato:700' rel='stylesheet' type='text/css'>-->
+        <link href='http://fonts.googleapis.com/css?family=Raleway:900,700,500' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div class="container">
@@ -32,10 +33,6 @@
                                 <p> 
                                     <label for="password" class="youpasswd" data-icon="p"> Your password </label>
                                     <input id="password" name="password" required="required" type="password" placeholder="insert your password here" /> 
-                                </p>
-                                <p class="keeplogin"> 
-                                    <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
-                                    <label for="loginkeeping">Keep me logged in</label>
                                 </p>
                                 <p class="login button"> 
                                     <input type="submit" value="LOGIN" /> 
