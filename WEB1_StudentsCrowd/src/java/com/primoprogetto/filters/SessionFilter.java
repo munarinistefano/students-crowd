@@ -39,7 +39,7 @@ public class SessionFilter implements Filter {
         user = (User)session.getAttribute("user");
         
         if (user==null){
-            resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
+            resp.sendRedirect(req.getContextPath()+"/LogoutServlet"); //redirect to landing page
         } else {
             chain.doFilter(request, response);
         }
