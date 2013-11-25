@@ -60,15 +60,73 @@ public class HTML_CreateGroup extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
+            out.println("<!doctype html>\n");
             out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateGroup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<form name=\"input\" action=\"CreateGroupServlet\" method=\"POST\">\n");
-            out.println("GroupName: <input type=\"text\" name=\"groupname\">");
-            out.println("<br> Owner: " + user.getUsername() + "<br>");
+            out.println("	<head>");
+            out.println("   <meta charset=\"utf-8\" />");
+            out.println("   <title>STUDENTS CROWD</title>");
+            out.println("   <link rel=\"stylesheet\" type=\"text/css\" href=\"css/stylesheet2.css\" />");
+            out.println("   <link href='http://fonts.googleapis.com/css?family=Raleway:900,500' rel='stylesheet' type='text/css'>");
+            out.println("   <meta charset=\"utf-8\" />");
+            out.println(" </head>");
+            out.println(" <body>");
+            out.println("   <div class=\"container\">");
+            out.println("     <header>");
+            out.println("       <a href=\"LandingPage\"><div id=\"logo\">");
+            out.println("         <img src=\"img/icon.png\">");
+            out.println("       </div></a>");
+            out.println("       <div id=\"title\">");
+            out.println("         <a href=\"LandingPage\"><h1>Students Crowd</h1></a>&nbsp;&nbsp;"
+                    + "<h2>&nbsp;&nbsp;>&nbsp;&nbsp;CREATE GROUP</h2>");
+            out.println("       <div id=\"userbar\">");
+            out.println("         <h1>" + user.getUsername() + " (<a href=\"LogoutServlet\">logout</a>)</h1>");
+            // out.println("       </div>");
+            out.println("     </header>");
+            out.println("   </div>");
+            
+            
+            out.println("<div class=\"content\">");
+            out.println(" <div class=\"error_container\">");
+            out.println("   <div id=\"invite_image\">\n");
+            out.println("   <img src=\"img/groups.png\"></div><div id=\"invite_text\">");
+            out.println("     <form name=\"input\" action=\"CreateGroupServlet\" method=\"POST\">\n");
+            
+            out.println("<p>");
+            out.println("<label for=\"username\" class=\"uname\" data-icon=\"g\"> Group name </label>");
+            out.println("<input id=\"username\" name=\"groupname\" required=\"required\" type=\"text\" placeholder=\"insert your group name here\" />");
+            out.println("</p>");
+                        
+                        //out.println("       GroupName: <input type=\"text\" name=\"groupname\">");
+            out.println("       <p> Owner: " + user.getUsername() + "</p>");
+            out.println("</div>");
+            out.println("		<div id=\"invite_users\">\n");
+            out.println("     <ul>");
+            
+            for (int i=0; i<userList.size(); i++) {
+                if (userList.get(i).getID() == user.getID()) {
+                  out.println("&nbsp;");
+                } else {
+                  out.println("<li><input type=\"checkbox\" name=" + userList.get(i).getID() +">"+ userList.get(i).getUsername() + "</li>");
+                }
+            }
+            
+            out.println("</ul>");
+            out.println("<input type=\"submit\" value=\"Submit\">\n");
+            out.println("</form>");
+            out.println("		</div>\n");
+      
+            
+            
+            
+            
+            
+            
+            
+            
+            //out.println("<form name=\"input\" action=\"CreateGroupServlet\" method=\"POST\">\n");
+            //out.println("GroupName: <input type=\"text\" name=\"groupname\">");
+            //out.println("<br> Owner: " + user.getUsername() + "<br>");
+            /*
             out.println("<ul>");
             for (int i=0; i<userList.size(); i++){
                 if (userList.get(i).getID() == user.getID()) {
@@ -79,7 +137,7 @@ public class HTML_CreateGroup extends HttpServlet {
             }
             out.println("</ul>");
             out.println("<input type=\"submit\" value=\"Submit\">\n");
-            out.println("</form>");
+            out.println("</form>");*/
             out.println("</body>");
             out.println("</html>");
         } finally {            
