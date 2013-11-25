@@ -26,16 +26,16 @@
         <servlet-class>com.primoprogetto.servlet.Servlet_GeneratePdf</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GroupList</servlet-name>
-        <servlet-class>com.primoprogetto.servlet.HTML_GroupList</servlet-class>
+        <servlet-name>GroupsList</servlet-name>
+        <servlet-class>com.primoprogetto.servlet.HTML_GroupsList</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddPostServlet</servlet-name>
         <servlet-class>com.primoprogetto.servlet.Servlet_AddPost</servlet-class>
-        <init-param>
+        <!--<init-param>
             <param-name>uploadDirectory</param-name>
             <param-value>/Users/Stefano/NetBeansProjects/studentscrowd/WEB1_StudentsCrowd/Web Pages/Resources/File</param-value>
-        </init-param>
+        </init-param>-->
     </servlet>
     <servlet>
         <servlet-name>Group</servlet-name>
@@ -80,8 +80,8 @@
         <url-pattern>/LandingPage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GroupList</servlet-name>
-        <url-pattern>/GroupList</url-pattern>
+        <servlet-name>GroupsList</servlet-name>
+        <url-pattern>/GroupsList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Group</servlet-name>
@@ -100,14 +100,6 @@
         <filter-name>SessionFilter</filter-name>
         <filter-class>com.primoprogetto.filters.SessionFilter</filter-class>
     </filter>
-    <filter>
-        <filter-name>GroupFilter</filter-name>
-        <filter-class>com.primoprogetto.filters.GroupFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>GroupFilter</filter-name>
-        <url-pattern>/Group</url-pattern>
-    </filter-mapping>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
         <url-pattern>/LandingPage</url-pattern>
@@ -121,8 +113,25 @@
         <url-pattern>/Invitation</url-pattern>
         <url-pattern>/InvitationServlet</url-pattern>
         <url-pattern>/GeneratePdfServlet</url-pattern>
-        <url-pattern>/GroupList</url-pattern>
+        <url-pattern>/GroupsList</url-pattern>
         <url-pattern>/AddPostServlet</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>GroupFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.GroupFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>GroupFilter</filter-name>
+        <url-pattern>/Group</url-pattern>
+        <url-pattern>/GeneratePdfServlet</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>PdfFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.PdfFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PdfFilter</filter-name>
+        <url-pattern>/GeneratePdfServlet</url-pattern>
     </filter-mapping>
     <!--CONTEXT LISTENER-->
     <listener>

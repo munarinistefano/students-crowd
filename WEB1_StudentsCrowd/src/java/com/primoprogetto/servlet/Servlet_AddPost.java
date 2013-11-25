@@ -35,6 +35,7 @@ public class Servlet_AddPost extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        fileName = null;
         // read the uploadDir from the servlet parameters
         /*dirName = config.getInitParameter("uploadDirectory");
         if (dirName == null) {
@@ -95,29 +96,7 @@ public class Servlet_AddPost extends HttpServlet {
         MultipartRequest multi = new MultipartRequest(request,".");
         File f = multi.getFile("file1");
         String text = multi.getParameter("text");
-        
         fileName = multi.getFilesystemName("file1");
-        
-        dirName = request.getServletContext().getRealPath("Resources/");
-        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
-        File file = new File(dirName);
-        if (!file.exists()){
-            file.mkdir();
-        }
-        
-        dirName = request.getServletContext().getRealPath("Resources/File/");
-        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
-        File file2 = new File(dirName);
-        if (!file2.exists()){
-            file2.mkdir();
-        }
-        
-        dirName = request.getServletContext().getRealPath("Resources/File/" + group_id + "/");
-        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
-        File file3 = new File(dirName);
-        if (!file3.exists()){
-            file3.mkdir();
-        }
         
         // Get the system date and time.
         java.util.Date utilDate = new java.util.Date();
@@ -125,22 +104,52 @@ public class Servlet_AddPost extends HttpServlet {
         java.sql.Date date = new java.sql.Date(utilDate.getTime());
         
         try {
-            postID = Post.addPost(text, user.getID(), group_id ,date);
+            postID = Post.addPost(text, user.getID(), group_id ,date);                      //add post to DB
         } catch (SQLException ex) {
             Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if (uploadFile(f,user)){
-            try {
-                PostFile.addPostFile(fileName, postID);
-            } catch (SQLException ex) {
-                Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);
+        if (fileName!=null){
+            fileName = formatFileName(fileName);
+            //check if "Resources" folder exists. If not, create it!
+            dirName = request.getServletContext().getRealPath("Resources/");
+            //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+            File file = new File(dirName);
+            if (!file.exists()){
+                file.mkdir();
+            }
+
+            //check if "Resources/File" folder exists. If not, create it!
+            dirName = request.getServletContext().getRealPath("Resources/File/");
+            //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+            File file2 = new File(dirName);
+            if (!file2.exists()){
+                file2.mkdir();
+            }
+
+            //check if "Resources/File/#groupID" folder exists. If not, create it!
+            dirName = request.getServletContext().getRealPath("Resources/File/" + group_id + "/");
+            File file3 = new File(dirName);
+            if (!file3.exists()){
+                file3.mkdir();
+            }
+            
+            if (uploadFile(f,user)){
+                try {
+                    PostFile.addPostFile(fileName, postID);                                     //add file to DB
+                } catch (SQLException ex) {
+                    Logger.getLogger(Servlet_AddPost.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         
         processRequest(request, response);
     }
 
+    /*
+    *  Used to upload a file to the server.
+    *  @return true if succesfully uploaded, false otherwise
+    */
     private boolean uploadFile(File f, User user) throws FileNotFoundException, IOException {
         if (f!=null) { 
             fileName = user.getID() + "_" +fileName;       //FILENAME = 'GROUPID'_'USERID'_FILENAME
@@ -150,10 +159,18 @@ public class Servlet_AddPost extends HttpServlet {
             while (fIS.available()>0) {
                 fOS.write(fIS.read()); 
             }
-        fIS.close(); 
-        fOS.close();
-        return true;
+            fIS.close(); 
+            fOS.close();
+            return true;
         }
         return false;
+    }
+
+    /*
+    *  Delete white spaces from file name
+    */
+    private String formatFileName(String fileName) {
+        fileName = fileName.replaceAll(" ", "");
+        return fileName;
     }
 }

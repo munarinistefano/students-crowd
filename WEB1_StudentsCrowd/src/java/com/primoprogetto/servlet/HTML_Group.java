@@ -6,8 +6,11 @@ package com.primoprogetto.servlet;
 
 import com.primoprogetto.database.Post;
 import com.primoprogetto.database.User;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -133,8 +136,29 @@ public class HTML_Group extends HttpServlet {
     }// </editor-fold>
 
     private String formatText(String text, int group_id, HttpServletRequest request) {
-        String delims = "[$$]+";
-        int start = text.indexOf("$$");
+        
+        String formattedText="";
+        String delims = "[ ]+";
+        String [] token = text.split(delims);
+        for (int i=0; i<token.length; i++){
+            if (token[i].startsWith("$$www") && token[i].endsWith("$$")){
+                formattedText += " <a href=\"http://" + token[i].substring(2, token[i].length()-2) + "\" target='blank'>" + token[i].substring(2, token[i].length()-2) + " </a> ";
+            } else if (token[i].startsWith("$$http://") && token[i].endsWith("$$")){
+                formattedText += " <a href=\"" + token[i].substring(2, token[i].length()-2) + "\" target='blank'>" + token[i].substring(2, token[i].length()-2) + " </a> ";
+            }else if (token[i].startsWith("$$") && token[i].endsWith("$$")){
+                if (fileExistsInThisGroup(token[i],group_id,request)){
+                    String path = "Resources/File/" + group_id;
+                    formattedText += " <a href=\"" + path + "/" + token[i].substring(2, token[i].length()-2) + "\" target='blank'>" + token[i].substring(2, token[i].length()-2) + " </a> ";
+                } else {
+                    formattedText += token[i].substring(2, token[i].length()-2) + " ";
+                }
+            } else {
+                formattedText += token[i] + " ";
+            }
+        }
+        
+        
+        /*int start = text.indexOf("$$");
         int end = text.indexOf("$$", start+1);
         
         String file=null;
@@ -143,6 +167,18 @@ public class HTML_Group extends HttpServlet {
             return text.substring(0, start) + "<a href=\"" + path + "/" + text.substring(start+2, end) + "\" target='blank'>" + text.substring(start+2,end) + " </a> " + text.substring(end+2);
         } else {
             return text;
+        }*/
+        return formattedText;
+    }
+
+    private boolean fileExistsInThisGroup(String fileName, int group_id, HttpServletRequest request) {
+        //check if "Resources/File/#groupID" folder exists. If not, create it!
+        String filePath = request.getServletContext().getRealPath("Resources/File/" + group_id + "/" + fileName);
+        //System.err.println(request.getServletContext().getRealPath("/web/Resources"));
+        File file = new File(filePath);
+        if (file.exists()){
+            return true;
         }
+        return false;
     }
 }

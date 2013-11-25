@@ -93,13 +93,12 @@ public class Servlet_GeneratePdf extends HttpServlet {
                     Logger.getLogger(Servlet_GeneratePdf.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                // 2. Stampo il numero di posts dell'utente in questione
-                document.add(new Paragraph("number of posts: " + Post.getNumberOfPostsOfAUser()));
 
-                // 3. Se esistono posts a nome dell'utente, stampo la data dell'ultimo post
+                // 2. Se esistono posts a nome dell'utente, stampo il numero di post e la data dell'ultimo post
                 if (Post.getNumberOfPostsOfAUser() == 0) {
-                    document.add(new Paragraph("No post inserted!"));
+                    document.add(new Paragraph("No posts inserted!"));
                 } else {
+                    document.add(new Paragraph("number of posts: " + Post.getNumberOfPostsOfAUser()));
                     document.add(new Paragraph("Last post: " + Post.getDateOfLastPostOfAUser()));
                 }
 

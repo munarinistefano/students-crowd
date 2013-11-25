@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alan
  */
-public class HTML_GroupList extends HttpServlet {
+public class HTML_GroupsList extends HttpServlet {
   DBManager manager;
     HttpSession session;
     User user;

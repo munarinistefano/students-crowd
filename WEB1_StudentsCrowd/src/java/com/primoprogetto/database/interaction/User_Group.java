@@ -22,6 +22,7 @@ public class User_Group {
     private final static String getMyGroups = "SELECT * FROM USERGROUP JOIN USERS ON USERGROUP.USER_ID = USERS.ID JOIN GROUPS ON USERGROUP.GROUP_ID = GROUPS.ID WHERE USERGROUP.USER_ID = ?";
     private final static String isPartOfAGroup = "SELECT COUNT(1) FROM USERGROUP WHERE GROUP_ID = ? AND USER_ID = ?";
     private final static String getMembersNames = "SELECT USERNAME, ID FROM USERS JOIN USERGROUP ON USERS.ID = USERGROUP.USER_ID WHERE USERGROUP.GROUP_ID = ?";
+    private final static String isAdmin = "SELECT ROLE FROM USERGROUP WHERE GROUP_ID = ? AND USER_ID = ?";
     
     public static void add(int user_id, int group_id, int role) throws SQLException {
         PreparedStatement stm = DBManager.executeInsertQuery(insertQuery);
@@ -84,5 +85,19 @@ public class User_Group {
             rs.close();
         }
         return users;
+    }
+     
+    public static boolean isAdmin (int user_id, int group_id) throws SQLException{
+        ResultSet rs = DBManager.executeSelectQuery(isAdmin, group_id, user_id);
+        try {
+            while (rs.next()) {
+                if (rs.getInt(1) == 1){
+                    return true;
+                }
+            }
+        } finally {
+            rs.close();
+        }
+        return false;
     }
 }

@@ -55,7 +55,8 @@ public class Servlet_Login extends HttpServlet {
         
         username = request.getParameter("username");    //get form parameters
         password = request.getParameter("password");
-        session = request.getSession();                 //get an instance of the current session
+        session = request.getSession(true);                 //get an instance of the current session
+        
         
         try { 
             user = manager.authenticate(username, password);   //try to autentichate user with username & password
@@ -66,7 +67,6 @@ public class Servlet_Login extends HttpServlet {
         if (user==null){                                       //if user does not exists, redirect to login page
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {
-            
             session.setAttribute("user", user);                //set session attribute
             
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

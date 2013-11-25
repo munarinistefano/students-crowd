@@ -21,11 +21,13 @@ import javax.servlet.http.HttpSession;
  * @author Stefano
  */
 public class SessionFilter implements Filter {
-    HttpSession session = null;
+    HttpSession session;
+    User user;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        
+        session = null;
+        user = null;
     }
 
     @Override
@@ -34,20 +36,14 @@ public class SessionFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse)response;
         
         session = req.getSession(false);
-        /*if (session==null){
-            resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to login page
-        } else {
-            chain.doFilter(request, response);
-        }
-        if (session==null){
-             resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
-        }*/
+        user = (User)session.getAttribute("user");
         
-        if ((User)session.getAttribute("user")==null){
+        if (user==null){
             resp.sendRedirect(req.getContextPath()+"/index.jsp"); //redirect to landing page
         } else {
             chain.doFilter(request, response);
         }
+        
     }
 
     @Override

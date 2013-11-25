@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.primoprogetto.filters;
 
 import com.primoprogetto.database.User;
@@ -24,65 +26,57 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano
  */
-public class GroupFilter implements Filter {
-    
-    String queryString = null;
-    int user_id,group_id;
-    User user;
-    HttpSession session;
+public class PdfFilter implements Filter {
 
+    String queryString;
+    User user;
+    int group_id;
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        queryString = null;
         user = null;
-        session = null;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse resp = (HttpServletResponse)response;
+        HttpSession session = req.getSession();
         
-        session = req.getSession();
         user = (User)session.getAttribute("user");
-        
+                
         if (request instanceof HttpServletRequest) {
-            //url = req.getRequestURL().toString();
             queryString = ((HttpServletRequest)request).getQueryString();
         }
         
         if (!queryString.substring(0, 3).equals("id=")){
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
-            //redirect to ERROR PAGE
         }
         
-        queryString = queryString.substring(3); 
-        
-        
-        //if (user!=null){
-            user_id = user.getID();
-        //}
+        queryString = queryString.substring(3);
         
         NumberFormatException error = null;
         try {
-            group_id = Integer.parseInt(queryString); //get group ID
+            group_id = Integer.parseInt(queryString);
         } catch (NumberFormatException e) {
             error = e;
         }
         
-        boolean isPartOfAGroup = false;
+        boolean isAdmin = false;
         if (error!=null){
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
         } else {
             try {
-                isPartOfAGroup = User_Group.isPartOfAGroup(user_id, group_id);
+                isAdmin = User_Group.isAdmin(user.getID(), group_id);
             } catch (SQLException ex) {
                 Logger.getLogger(GroupFilter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
         
-        if (isPartOfAGroup){
+        if (isAdmin){
             chain.doFilter(request, response);
         } else {
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
@@ -93,6 +87,5 @@ public class GroupFilter implements Filter {
     @Override
     public void destroy() {
     }
-    
     
 }

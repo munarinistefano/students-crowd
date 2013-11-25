@@ -35,7 +35,6 @@ public class Invitation {
             stm.setInt(1, USER_ID);
             stm.setInt(2, GROUP_ID);
             stm.executeUpdate();
-            System.out.println("addInvitation");
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
         }
@@ -46,13 +45,11 @@ public class Invitation {
      */
     public static void addInvitation (int USER_ID, int GROUP_ID, int state) throws SQLException{
         PreparedStatement stm = DBManager.executeInsertQuery(addInvitationWithState);
-        System.err.println("user_id: "+USER_ID+" GROUP_ID: "+GROUP_ID+" STATE:"+state);
         try {
             stm.setInt(1, USER_ID);
             stm.setInt(2, GROUP_ID);
             stm.setInt(3, state);
             stm.executeUpdate();
-            System.out.println("addInvitation");
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
         }
@@ -90,7 +87,6 @@ public class Invitation {
             stm.setInt(2, user_id);
             stm.setInt(3, group_id);
             stm.executeUpdate();
-            System.err.println("changeStateInvitation");
         } finally { // ricordarsi SEMPRE di chiudere i PreparedStatement in un blocco finally
             stm.close();
         }

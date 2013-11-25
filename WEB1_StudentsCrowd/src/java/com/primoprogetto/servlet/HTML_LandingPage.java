@@ -80,7 +80,7 @@ public class HTML_LandingPage extends HttpServlet {
             out.println("       <a href=\"Invitation\"><img src=\"img/icon.png\"><br /><font color=\"#12557F\">Invitations</font></a>");
             out.println("   </div>");
             out.println("   <div id=\"groups\">");
-            out.println("     <a href=\"GroupList\"><img src=\"img/icon.png\"><br /><font color=\"#12557F\">Groups</font></a>");
+            out.println("     <a href=\"GroupsList\"><img src=\"img/icon.png\"><br /><font color=\"#12557F\">Groups</font></a>");
             out.println("   </div>");
             out.println("   <div id=\"create\">");
             out.println("     <a href=\"CreateGroup\"><img src=\"img/icon.png\"><br /><font color=\"#12557F\">Create group</font></a>");

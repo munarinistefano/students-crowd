@@ -27,7 +27,6 @@ public class Group {
         try {
           while (rs.next()) {
             this.ownerName = rs.getString(1);
-            System.err.println(ownerName);
           }
         } finally {
           rs.close();
