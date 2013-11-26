@@ -50,8 +50,10 @@ public class PdfFilter implements Filter {
             queryString = ((HttpServletRequest)request).getQueryString();
         }
         
+        boolean malformedUrl = false;
         if (!queryString.substring(0, 3).equals("id=")){
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            malformedUrl = true;
+            //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
         }
         
         queryString = queryString.substring(3);
@@ -65,7 +67,8 @@ public class PdfFilter implements Filter {
         
         boolean isAdmin = false;
         if (error!=null){
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            isAdmin = false;
+            //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
         } else {
             try {
@@ -76,7 +79,7 @@ public class PdfFilter implements Filter {
         }
         
         
-        if (isAdmin){
+        if (isAdmin && !malformedUrl){
             chain.doFilter(request, response);
         } else {
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");

@@ -83,8 +83,6 @@ public class HTML_Invitation extends HttpServlet {
                 }
             }
             out.println("</ul>");
-            out.println("<form name=\"input\" action=\"Invitation\" method=\"POST\">\n");
-            out.println("<input type=\"submit\" value=\"Submit\">\n");
             out.println("</body>");
             out.println("</html>");
         } finally {            

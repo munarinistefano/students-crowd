@@ -50,9 +50,18 @@ public class GroupFilter implements Filter {
             queryString = ((HttpServletRequest)request).getQueryString();
         }
         
-        if (!queryString.substring(0, 3).equals("id=")){
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
-            //redirect to ERROR PAGE
+        System.err.println(queryString.length());
+        
+        boolean malformedUrl = false;
+        if (queryString.length()>2){
+            if (!queryString.substring(0, 3).equals("id=")){
+                malformedUrl = true;
+                //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+                //redirect to ERROR PAGE
+            }
+        } else {
+            //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            malformedUrl = true;
         }
         
         queryString = queryString.substring(3); 
@@ -71,7 +80,8 @@ public class GroupFilter implements Filter {
         
         boolean isPartOfAGroup = false;
         if (error!=null){
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+            isPartOfAGroup = false;
+            //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
         } else {
             try {
@@ -82,11 +92,11 @@ public class GroupFilter implements Filter {
         }
         
         
-        if (isPartOfAGroup){
-            chain.doFilter(request, response);
-        } else {
+        if (!isPartOfAGroup || malformedUrl){
             resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO FORBIDDEN PAGE
+        } else {
+            chain.doFilter(request, response);
         }
     }
 

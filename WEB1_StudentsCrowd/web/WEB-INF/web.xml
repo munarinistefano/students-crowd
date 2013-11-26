@@ -138,6 +138,15 @@
         <description>listener</description>
         <listener-class>com.primoprogetto.listeners.ContextListener</listener-class>
     </listener>
+    <!--ERROR PAGE MAPPING-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/ERROR.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/ERROR.html</location>
+    </error-page> 
     <!-- DATABASE URL-->
     <context-param>
         <param-name>dburl</param-name>

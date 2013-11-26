@@ -8,6 +8,7 @@ import com.primoprogetto.database.DBManager;
 import com.primoprogetto.database.Group;
 import com.primoprogetto.database.User;
 import com.primoprogetto.database.interaction.User_Group;
+import com.primoprogetto.filters.GroupFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -77,7 +78,9 @@ public class HTML_GroupsList extends HttpServlet {
                         groupList.get(i).getName() + "</a> create by "
                         + groupList.get(i).getOwnerName() + " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");
-                out.println("<a href=GeneratePdfServlet?id=" + groupList.get(i).getID() + ">PDF</a><br /><br />");
+                if (isAdmin(groupList.get(i).getID())){
+                    out.println("<a href=GeneratePdfServlet?id=" + groupList.get(i).getID() + ">PDF</a><br /><br />");
+                }
             }
             out.println("</body>");
             out.println("</html>");
@@ -126,4 +129,14 @@ public class HTML_GroupsList extends HttpServlet {
   public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
+
+    private boolean isAdmin(int group_id) {
+        boolean isAdmin = false;
+        try {
+                isAdmin = User_Group.isAdmin(user.getID(), group_id);
+            } catch (SQLException ex) {
+                Logger.getLogger(GroupFilter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return isAdmin;
+    }
 }
