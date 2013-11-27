@@ -80,6 +80,7 @@ public class GroupFilter implements Filter {
         
         boolean isPartOfAGroup = false;
         if (error!=null){
+            malformedUrl = true;
             isPartOfAGroup = false;
             //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
@@ -92,9 +93,11 @@ public class GroupFilter implements Filter {
         }
         
         
-        if (!isPartOfAGroup || malformedUrl){
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+        if (malformedUrl){
+            resp.sendRedirect(req.getContextPath() + "/errorpage.html");
             //REDIRECT TO FORBIDDEN PAGE
+        } else if (!isPartOfAGroup){
+            resp.sendRedirect(req.getContextPath() + "/permissiondenied.html");
         } else {
             chain.doFilter(request, response);
         }

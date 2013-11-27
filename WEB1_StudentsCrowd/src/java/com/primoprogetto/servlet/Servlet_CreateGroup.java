@@ -10,6 +10,7 @@ import com.primoprogetto.database.interaction.Group;
 import com.primoprogetto.database.interaction.Invitation;
 import com.primoprogetto.database.interaction.User_Group;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -48,7 +49,14 @@ public class Servlet_CreateGroup extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e){
+            System.err.println(e);
+        }
+        
+        //System.err.println(request.getCharacterEncoding());
         
         session = request.getSession();
         user = (User)session.getAttribute("user");
@@ -67,6 +75,8 @@ public class Servlet_CreateGroup extends HttpServlet {
 
             String[] paramValues = request.getParameterValues(paramName);
             for(int i=0; i < paramValues.length; i++) {
+                //String string = new String(paramValues[i].getBytes("UTF-8"),"UTF-8");
+                //System.err.println(string);
                 if (paramName.equals("groupname")){                 //get group name
                     try {
                         group_id = Group.addGroup(paramValues[i], user.getID(), date);

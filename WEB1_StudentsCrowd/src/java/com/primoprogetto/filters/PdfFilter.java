@@ -67,6 +67,7 @@ public class PdfFilter implements Filter {
         
         boolean isAdmin = false;
         if (error!=null){
+            malformedUrl = true;
             isAdmin = false;
             //resp.sendRedirect(req.getContextPath() + "/ERROR.html");
             //REDIRECT TO INVALID PAGE
@@ -78,12 +79,13 @@ public class PdfFilter implements Filter {
             }
         }
         
-        
-        if (isAdmin && !malformedUrl){
-            chain.doFilter(request, response);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/ERROR.html");
+        if (malformedUrl){
+            resp.sendRedirect(req.getContextPath() + "/errorpage.html");
             //REDIRECT TO FORBIDDEN PAGE
+        } else if (!isAdmin){
+            resp.sendRedirect(req.getContextPath() + "/permissiondenied.html");
+        } else {
+            chain.doFilter(request, response);
         }
     }
 

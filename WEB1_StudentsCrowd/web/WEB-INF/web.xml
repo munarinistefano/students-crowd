@@ -115,6 +115,7 @@
         <url-pattern>/GeneratePdfServlet</url-pattern>
         <url-pattern>/GroupsList</url-pattern>
         <url-pattern>/AddPostServlet</url-pattern>
+        <url-pattern>/build/web/Resources/File/</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>GroupFilter</filter-name>
@@ -141,11 +142,11 @@
     <!--ERROR PAGE MAPPING-->
     <error-page>
         <error-code>404</error-code>
-        <location>/ERROR.html</location>
+        <location>/errorpage.html</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/ERROR.html</location>
+        <location>/errorpage.html</location>
     </error-page> 
     <!-- DATABASE URL-->
     <context-param>

@@ -98,7 +98,7 @@ public class Servlet_AddPost extends HttpServlet {
         
         group_id = Integer.parseInt(request.getParameter("group_id"));
         
-        MultipartRequest multi = new MultipartRequest(request,".");
+        MultipartRequest multi = new MultipartRequest(request,".","UTF-8");
         File f = multi.getFile("file1");
         String text = multi.getParameter("text");
         fileName = multi.getFilesystemName("file1");
@@ -138,6 +138,8 @@ public class Servlet_AddPost extends HttpServlet {
             if (!file3.exists()){
                 file3.mkdir();
             }
+            
+            System.err.println(dirName);
             
             if (uploadFile(f,user)){
                 try {
