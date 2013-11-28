@@ -89,7 +89,7 @@ public class HTML_CreateGroup extends HttpServlet {
             out.println(" <div class=\"error_container\">");
             out.println("   <div id=\"invite_image\">\n");
             out.println("   <img src=\"img/groups.png\"></div><div id=\"invite_text\">");
-            out.println("     <form name=\"input\" action=\"CreateGroupServlet\" method=\"POST\">\n");
+            out.println("     <form name=\"input\" action=\"CreateGroupServlet\" method=\"POST\" accept-charset=\"ISO-8859-1\">\n");
             
             out.println("<p>");
             out.println("<label for=\"username\" class=\"uname\" data-icon=\"g\"> Group name </label>");

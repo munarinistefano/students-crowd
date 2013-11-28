@@ -75,7 +75,7 @@ public class HTML_GroupsList extends HttpServlet {
                 //System.err.println(groupList.get(i).getName());
                 //System.err.println(groupList.get(i).getOwnerName());
                 out.println(i+1 + ". <a href=Group?id=" + groupList.get(i).getID() + ">" + 
-                        groupList.get(i).getName() + "</a> create by "
+                        groupList.get(i).getName() + "</a> created by "
                         + groupList.get(i).getOwnerName() + " in date: "
                         + groupList.get(i).getCreationDate() + ";<br />");
                 if (isAdmin(groupList.get(i).getID())){
