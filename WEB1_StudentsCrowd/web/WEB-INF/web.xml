@@ -100,6 +100,18 @@
         <filter-name>SessionFilter</filter-name>
         <filter-class>com.primoprogetto.filters.SessionFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>GroupFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.GroupFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>PdfFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.PdfFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>FileFilter</filter-name>
+        <filter-class>com.primoprogetto.filters.FileFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
         <url-pattern>/LandingPage</url-pattern>
@@ -113,33 +125,28 @@
         <url-pattern>/Invitation</url-pattern>
         <url-pattern>/InvitationServlet</url-pattern>
         <url-pattern>/GeneratePdfServlet</url-pattern>
-        <url-pattern>/GroupsList</url-pattern>
+        <url-pattern>/GroupList</url-pattern>
         <url-pattern>/AddPostServlet</url-pattern>
-        <url-pattern>/build/web/Resources/File/</url-pattern>
+        <url-pattern>/Resources/*</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>GroupFilter</filter-name>
-        <filter-class>com.primoprogetto.filters.GroupFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>GroupFilter</filter-name>
         <url-pattern>/Group</url-pattern>
-        <url-pattern>/GeneratePdfServlet</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>PdfFilter</filter-name>
-        <filter-class>com.primoprogetto.filters.PdfFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>PdfFilter</filter-name>
         <url-pattern>/GeneratePdfServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FileFilter</filter-name>
+        <url-pattern>/Resources/*</url-pattern>
     </filter-mapping>
     <!--CONTEXT LISTENER-->
     <listener>
         <description>listener</description>
         <listener-class>com.primoprogetto.listeners.ContextListener</listener-class>
     </listener>
-    <!--ERROR PAGE MAPPING-->
+    <!--ERROR PAGEs MAPPING-->
     <error-page>
         <error-code>404</error-code>
         <location>/errorpage.html</location>
@@ -147,7 +154,7 @@
     <error-page>
         <error-code>500</error-code>
         <location>/errorpage.html</location>
-    </error-page> 
+    </error-page>
     <!-- DATABASE URL-->
     <context-param>
         <param-name>dburl</param-name>
@@ -155,7 +162,7 @@
     </context-param>
     <session-config>
         <session-timeout>
-            30
+            20
         </session-timeout>
     </session-config>
 </web-app>
